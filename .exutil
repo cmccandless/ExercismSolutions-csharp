@@ -1,0 +1,4 @@
+{
+  "track": "csharp",
+  "init_script": "./init.sh"
+}
