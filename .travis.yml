@@ -14,7 +14,7 @@ env:
     packages:
     - dotnet-dev-1.0.4
 script:
-  - make testall
+  - make test-all
 cache:
   directories:
   - $HOME/.nuget/packages
