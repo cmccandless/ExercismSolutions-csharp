@@ -1,6 +1,6 @@
 language: csharp
 dist: trusty
-dotnet: 2.0.0
+dotnet: 2.1.0
 mono: none
 env:
   global:
@@ -14,7 +14,7 @@ env:
     packages:
     - dotnet-dev-1.0.4
 script:
-  - make test-all
+  - make -j8 test-all
 cache:
   directories:
   - $HOME/.nuget/packages
