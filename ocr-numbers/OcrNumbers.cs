@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public static class OcrNumbers
@@ -11,12 +12,31 @@ public static class OcrNumbers
 
     public static Queue<T> ToQueue<T>(this IEnumerable<T> a) => new Queue<T>(a);
 
-    private static IEnumerable<T> Pop<T>(Queue<T> q) => new[] { q.Dequeue(), q.Dequeue(), q.Dequeue() };
+    private static IEnumerable<T> Pop<T>(Queue<T> q, int count) => Enumerable.Range(0, count).Select(_ => q.Dequeue()).ToArray();
 
     private static IEnumerable<Queue<char>> GetLetters(this string input)
     {
-        var lines = input.Split('\n').Select(ToQueue).Take(3).ToArray();
-        while (lines[0].Count > 2) yield return lines.SelectMany(Pop).ToQueue();
+        var lines = input.Split('\n').Select(ToQueue).ToQueue();
+        while (lines.Count > 3)
+        {
+            var lineSet = Pop(lines, 4).ToArray();
+            while (lineSet.All(ls => ls.Count > 2))
+            {
+                yield return lineSet.SelectMany(line => Pop(line, 3)).ToQueue();
+            }
+            if (lineSet.Any(ls => ls.Count != 0))
+            {
+                throw new ArgumentException("incomplete sequence");
+            }
+            if (lines.Count > 3)
+            {
+                yield return new Queue<char>();
+            }
+        }
+        if (lines.Count() != 0)
+        {
+            throw new ArgumentException("incomplete sequence");
+        }
     }
 
     private static int HasSegment(char a, char b) => a == b ? 1 : 0;
@@ -25,8 +45,8 @@ public static class OcrNumbers
 
     private static char ToChar(this int x) => Ocr.ContainsKey(x) ? Ocr[x] : '?';
 
-    private static char Convert(IEnumerable<char> letter) => 
-        letter.Zip("*_*|_||_|", HasSegment).Aggregate(0, Accumulate).ToChar();
+    private static char Convert(IEnumerable<char> letter) =>
+        letter.Any() ? letter.Zip("*_*|_||_|", HasSegment).Aggregate(0, Accumulate).ToChar() : ',';
 
     public static string Convert(string input) => new string(input.GetLetters().Select(Convert).ToArray());
 }

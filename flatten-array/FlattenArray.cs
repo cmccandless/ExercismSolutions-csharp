@@ -1,20 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-public class Flattener
+public class FlattenArray
 {
-    public static IEnumerable<object> Flatten(List<object> list)
+    public static int[] Flatten(int[] arr) => Flatten(arr.Cast<object>().ToArray());
+    public static int[] Flatten(object[] arr)
     {
-        var sin = new Stack<object>(list);
-        var sout = new Stack<object>();
-        while (sin.Count > 0)
+        var sin = new Stack<object>(arr);
+        var sout = new Stack<int>();
+        while (sin.Any())
         {
-            var x = sin.Pop();
-            if (x is List<object>)
+            switch(sin.Pop())
             {
-                foreach (var y in x as List<object>) sin.Push(y);
+                case object[] xs:
+                    foreach (var y in xs) sin.Push(y);
+                    break;
+                case int i:
+                    sout.Push(i);
+                    break;
             }
-            else if (x != null) sout.Push(x);
         }
-        return sout;
+        return sout.ToArray();
     }
 }

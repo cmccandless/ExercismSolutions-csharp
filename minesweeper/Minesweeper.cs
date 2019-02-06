@@ -11,9 +11,10 @@ public static class Minesweeper
 
     private static string ZeroToSpace(this string s) => s.Replace('0', ' ');
 
-    private static IEnumerable<char[]> GetLines(this string s) => s.Split('\n').Select(SpaceToZeroA);
+    private static IEnumerable<char[]> GetLines(this string s) => s.Split('\n').GetLines();
+    private static IEnumerable<char[]> GetLines(this string[] ss) => ss.Select(SpaceToZeroA);
 
-    private static string JoinLines(this IEnumerable<string> lines) => string.Join("\n", lines);
+    // private static string JoinLines(this IEnumerable<string> lines) => string.Join("\n", lines);
 
     private static void Increment(this char[][] lines, int y, int x)
     {
@@ -35,8 +36,8 @@ public static class Minesweeper
                 if (lines[i][j] == '*') lines.IncrementNeighbors(i, j);
             if (i > 0) yield return new string(lines[i - 1]);
         }
-        yield return new string(lines.Last());
+        if (lines.Any()) yield return new string(lines.Last());
     }
 
-    public static string Annotate(string input) => Annotate(input.GetLines()).Select(ZeroToSpace).JoinLines();
+    public static string[] Annotate(string[] input) => Annotate(input.GetLines()).Select(ZeroToSpace).ToArray();
 }

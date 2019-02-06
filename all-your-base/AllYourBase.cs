@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public static class Base
+public static class AllYourBase
 {
     private static int ToBase10Int(this int[] digits, int inputBase = 10) =>
         digits.Aggregate(0, (r, x) => r * inputBase + x);

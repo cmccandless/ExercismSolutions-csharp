@@ -8,10 +8,6 @@ endif
 lint:
 	@echo "No linter configured"
 
-# test:
-# 	$(DOTNET) test $(OPTS) $(FILES)
-
-
 test:
 	@ $(foreach FILE,$(FILES), \
 		$(call dotest,$(FILE)) \
@@ -24,6 +20,9 @@ test-all:
 
 define dotest
 	cd $(1); \
-	DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 $(DOTNET) test $(OPTS); \
+	[ ! -f "README.md" ] || \
+	pwd && \
+	DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1 $(DOTNET) test $(OPTS) || \
+	exit 1; \
 	cd ..;
 endef

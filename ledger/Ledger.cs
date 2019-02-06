@@ -35,11 +35,15 @@ public static class Ledger
     private static Dictionary<string, string> datPat = new Dictionary<string, string>
     { ["en-US"] = "MM/dd/yyyy", ["nl-NL"] = "dd/MM/yyyy" };
 
+    private static Dictionary<string, int> negPat = new Dictionary<string, int>
+    { ["en-US"] = 0, ["nl-NL"] = 12 };
+
     private static CultureInfo CreateCulture(string cur, string loc)
     {
         var culture = new CultureInfo(loc);
         culture.NumberFormat.CurrencySymbol = curSymb[cur.Assert(curSymb.ContainsKey, "Invalid currency")];
-        culture.DateTimeFormat.ShortDatePattern = datPat[loc.Assert(datPat.ContainsKey, "Invalid Locale")];
+        culture.NumberFormat.CurrencyNegativePattern = negPat[loc.Assert(negPat.ContainsKey, "Invalid locale")];
+        culture.DateTimeFormat.ShortDatePattern = datPat[loc.Assert(datPat.ContainsKey, "Invalid locale")];
         return culture;
     }
 
