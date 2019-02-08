@@ -22,7 +22,7 @@ public static class IsbnVerifier
             return clean.Length == 10 &&
                    Enumerable.Range(0, 10).Sum(parseDigit) % 11 == 0;
         }
-        catch (FormatException ex)
+        catch (FormatException)
         {
             return false;
         }
