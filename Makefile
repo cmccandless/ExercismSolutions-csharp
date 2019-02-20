@@ -22,7 +22,8 @@ no-skip:
 check-migrate: $(MIGRATE_OBJECTS)
 
 $(MIGRATE_OBJECTS):
-	@ [ -f $@ ] || $(error "$(shell echo $@ | cut -d/ -f1) has not been migrated")
+	$(eval EXERCISE := $(patsubst %/.exercism/metadata.json,%,$@))
+	@ [ -f $@ ] || (echo "$(EXERCISE) has not been migrated" && bash -c 'exit 1')
 
 clean: $(CLEAN_TARGETS)
 $(CLEAN_TARGETS):
