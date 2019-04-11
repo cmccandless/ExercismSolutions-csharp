@@ -6,7 +6,10 @@ public class SumOfMultiples
     private static IEnumerable<int> MultsLessThan(int n, int mult)
     {
         var result = new List<int>();
-        for (int x = n; x < mult; x += n) result.Add(x);
+        if (n > 0)
+        {
+            for (int x = n; x < mult; x += n) result.Add(x);
+        }
         return result;
     }
 

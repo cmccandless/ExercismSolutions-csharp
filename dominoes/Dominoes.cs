@@ -4,46 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DominoChain = System.Collections.Generic.List<(int left, int right)>;
+
 public class Dominoes
 {
-	public static bool CanChain(Tuple<int, int>[] dominoes)
+	public static bool CanChain((int left, int right)[] dominoes)
 	{
-		if (dominoes.Length == 0) return true;
-		List<Tuple<int, int>> results;
-		if (!TryChain(dominoes, out results)) return false;
-		return results.FirstOrDefault(t => t.Item2 == t.Item1) != null;
+		DominoChain results;
+		return dominoes.Length == 0 || TryChain(dominoes, out results) && results.Any(d => d.right == d.left);
 	}
-	private static bool TryChain(Tuple<int, int>[] dominoes, out List<Tuple<int, int>> c)
+	private static bool TryChain((int left, int right)[] dominoes, out DominoChain c)
 	{
+		c = new DominoChain();
 		if (dominoes.Length < 2)
 		{
-			c = dominoes.ToList();
+			c.AddRange(dominoes);
 			return true;
 		}
 		if (dominoes.Length == 2) return TryChain(dominoes[0], dominoes[1], out c);
-		c = new List<Tuple<int, int>>();
 		for (int i = 0; i < dominoes.Length; i++)
 		{
 			var set = dominoes.ToList();
 			var t1 = set[i];
 			set.RemoveAt(i);
-			List<Tuple<int, int>> subResults;
+			DominoChain subResults;
 			if (!TryChain(set.ToArray(), out subResults)) continue;
 			foreach (var t2 in subResults)
 			{
-				List<Tuple<int, int>> matches;
+				DominoChain matches;
 				if (TryChain(t1, t2, out matches)) c.AddRange(matches);
 			}
 		}
 		return c.Count > 0;
 	}
-	private static bool TryChain(Tuple<int, int> a, Tuple<int, int> b, out List<Tuple<int, int>> c)
+	private static bool TryChain((int left, int right) a, (int left, int right) b, out DominoChain c)
 	{
-		c = new List<Tuple<int, int>>();
-		if (a.Item1 == b.Item1) c.Add(Tuple.Create(a.Item2, b.Item2));
-		if (a.Item1 == b.Item2) c.Add(Tuple.Create(a.Item2, b.Item1));
-		if (a.Item2 == b.Item1) c.Add(Tuple.Create(a.Item1, b.Item2));
-		if (a.Item2 == b.Item2) c.Add(Tuple.Create(a.Item1, b.Item1));
+		c = new DominoChain();
+		if (a.left == b.left) c.Add((a.right, b.right));
+		if (a.left == b.right) c.Add((a.right, b.left));
+		if (a.right == b.left) c.Add((a.left, b.right));
+		if (a.right == b.right) c.Add((a.left, b.left));
 		return c.Count > 0;
 	}
 }

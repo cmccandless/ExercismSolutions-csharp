@@ -1,79 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-// using System.Text;
 
-public delegate void ChangedEventHandler(object sender, int value);
 public class Reactor
 {
-    private Dictionary<Cell, HashSet<Cell>> cells = new Dictionary<Cell, HashSet<Cell>>();
-    public Cell CreateInputCell(int value)
+    public InputCell CreateInputCell(int value) => new InputCell(value);
+
+    public ComputeCell CreateComputeCell(IEnumerable<Cell> producers, Func<int[], int> compute) =>
+        new ComputeCell(producers, compute);
+}
+
+public abstract class Cell
+{
+    public event System.EventHandler<int> Update;
+    public event System.EventHandler<int> Changed;
+    protected void Notify()
     {
-        var cell = new Cell { Value = value };
-        cell.Changed += CellChanged;
-        cells.Add(cell, new HashSet<Cell>());
-        return cell;
+        if (Update != null) 
+            Update(this, this.Value);
+        if (Changed != null)
+            Changed(this, this.Value);
     }
-    public Cell CreateComputeCell(Cell[] inputs, Func<int[], int> lambda)
+
+    public virtual int Value { get; set; }
+}
+
+public class InputCell : Cell
+{
+    public InputCell(int value) => this.Value = value;
+    public override int Value
     {
-        var cell = new Cell { Updater = lambda, Dependencies = new HashSet<Cell>(inputs) };
-        cells.Add(cell.Update(), new HashSet<Cell>());
-        foreach (var input in inputs) cells[input].Add(cell);
-        return cell;
-    }
-    private void CellChanged(object sender, int value)
-    {
-        var cell = sender as Cell;
-        if (cell == null) return;
-        var updated = new HashSet<Cell>();
-        updated.Add(cell);
-        var toUpdate = new HashSet<Cell>(cells[cell]);
-        while (toUpdate.Any())
+        get => base.Value;
+        set
         {
-            cell = toUpdate.OrderBy(c => c.Index).First();
-            toUpdate.Remove(cell);
-            var deps = cell.Dependencies.Except(updated).ToArray();
-            if (deps.Any())
-            {
-                foreach (var dep in deps) toUpdate.Add(dep);
-                toUpdate.Add(cell);
-            }
-            else
-            {
-                updated.Add(cell.Update());
-                foreach (var other in cells[cell]) toUpdate.Add(other);
-            }
+            base.Value = value;
+            Notify();
         }
     }
 }
-public class Cell
+
+public class ComputeCell : Cell
 {
-    public ChangedEventHandler Changed;
-    private static int counter = 0;
-    public readonly int Index;
-    private int _value;
-    public Func<int[], int> Updater = null;
-    public HashSet<Cell> Dependencies = new HashSet<Cell>();
-    public int Value
+    private int LastKnownValue;
+    private Func<int[], int> Compute { get; }
+    private Cell[] Producers { get; }
+    private int[] Inputs => Producers.Select(p => p.Value).ToArray();
+
+    public ComputeCell(IEnumerable<Cell> producers, Func<int[], int> compute)
     {
-        get
+        this.Producers = producers.ToArray();
+        this.Compute = compute;
+        Calculate();
+        this.LastKnownValue = this.Value;
+        foreach (var producer in producers)
+            SubscribeTo(producer);
+    }
+
+    private void SubscribeTo(Cell producer)
+    {
+        producer.Update += this.OnUpdate;
+        producer.Changed += this.OnChange;
+    }
+
+    private void Calculate() => this.Value = Compute(Inputs);
+
+    private void OnUpdate(object sender, int newValue) => Calculate();
+
+    private void OnChange(object sender, int newValue)
+    {
+        if (this.LastKnownValue != this.Value)
         {
-            return _value;
-        }
-        set
-        {
-            if (_value != value)
-            {
-                _value = value;
-                if (this.Changed != null) this.Changed(this, value);
-            }
+            this.LastKnownValue = this.Value;
+            Notify();
         }
     }
-    public Cell() { Index = counter++; }
-    public Cell Update()
-    {
-        if (Updater != null) this.Value = Updater(Dependencies.Select(c => c.Value).ToArray());
-        return this;
-    }
-    public override string ToString() { return Index.ToString(); }
 }

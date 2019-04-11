@@ -17,14 +17,27 @@ be described in the language/track specific files of the exercise.
 [Hangman]: https://en.wikipedia.org/wiki/Hangman_%28game%29
 [frp]: https://en.wikipedia.org/wiki/Functional_reactive_programming
 
-### Submitting Exercises
+## Hints
+This exercise requires you to work with Reactive extension. For more information, see 
+[this page](http://reactivex.io/intro.html) .
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+In reactive programming it's easier to communicate intentions in marble diagrams. Tests are augmented
+with marble diagram information. Text format is parsable by
+[this tool](https://bitbucket.org/achary/rx-marbles/src/master/docs/syntax.md?fileviewer=file-view-default)
+.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
 
+## Running the tests
 
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Hangman.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 

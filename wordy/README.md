@@ -1,81 +1,91 @@
 # Wordy
 
-Write a program that takes a word problem and returns the answer as an integer.
+Parse and evaluate simple math word problems returning the answer as an integer.
 
-## Step 1
+## Iteration 0 — Numbers
 
-E.g.
+Problems with no operations simply evaluate to the number given.
 
-> What is 5 plus 13?
+> What is 5?
 
-The program should handle large numbers and negative numbers.
+Evaluates to 5.
 
-Remember, that these are verbal word problems, not treated as you
-normally would treat a written problem.  This means that you calculate
-as you move forward each step.  In other words, you should ignore order
-of operations.  3 + 2 * 3 = 15, not 9.
+## Iteration 1 — Addition
 
-Use the tests to drive your solution by deleting the `skip` in one test
-at a time.
-
-## Step 2
-
-E.g.
+Add two numbers together.
 
 > What is 5 plus 13?
+
+Evaluates to 18.
+
+Handle large numbers and negative numbers.
+
+## Iteration 2 — Subtraction, Multiplication and Division
+
+Now, perform the other three operations.
 
 > What is 7 minus 5?
+
+2
 
 > What is 6 multiplied by 4?
 
+24
+
 > What is 25 divided by 5?
 
-## Step 3
+5
 
-E.g.
+## Iteration 3 — Multiple Operations
+
+Handle a set of operations, in sequence.
+
+Since these are verbal word problems, evaluate the expression from
+left-to-right, _ignoring the typical order of operations._
 
 > What is 5 plus 13 plus 6?
 
-> What is 7 minus 5 minus 1?
+24
 
-> What is 9 minus 3 plus 5?
+> What is 3 plus 2 multiplied by 3?
 
-> What is 3 plus 5 minus 8?
+15  (i.e. not 9)
 
-## Step 4
+## Iteration 4 — Errors
 
-E.g.
+The parser should reject:
 
-> What is 5 plus 13?
+* Unsupported operations ("What is 52 cubed?")
+* Non-math questions ("Who is the President of the United States")
+* Word problems with invalid syntax ("What is 1 plus plus 2?")
 
-> What is 7 minus 5?
+## Bonus — Exponentials
 
-> What is 6 times 4?
-
-> What is 25 divided by 5?
-
-> What is 78 plus 5 minus 3?
-
-> What is 18 times 3 plus 16?
-
-> What is 4 times 3 divided by 6?
-
-> What is 4 plus 3 times 2?
-
-## Extensions
-
-Implement questions of the type:
+If you'd like, handle exponentials.
 
 > What is 2 raised to the 5th power?
 
-Remember to write failing tests for this code.
+32
 
-### Submitting Exercises
+## Hints
+- To parse the text, you could try to use the [Sprache](https://github.com/sprache/Sprache/blob/develop/README.md) library. You can also find a good tutorial [here](https://www.thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/).
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Wordy.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Inspired by one of the generated questions in the Extreme Startup game. [https://github.com/rchatley/extreme_startup](https://github.com/rchatley/extreme_startup)
+

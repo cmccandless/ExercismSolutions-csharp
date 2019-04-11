@@ -12,7 +12,7 @@ public static class Grep
 //- `-i` Match line using a case-insensitive comparison.
 //- `-v` Invert the program -- collect all lines that fail to match the pattern.
 //- `-x` Only match entire lines, instead of lines that contain a match.
-	public static string Find(string pattern, string flags, string[] files)
+	public static string Match(string pattern, string flags, string[] files)
 	{
 		var results = new List<string>();
 		var opts = RegexOptions.None;
@@ -41,6 +41,6 @@ public static class Grep
 			}
 		}
 		results.Add(string.Empty);
-		return string.Join("\n", results);
+		return string.Join("\n", results).TrimEnd();
 	}
 }

@@ -1,18 +1,16 @@
 # Food Chain
 
-Write a program that generates the lyrics of the song 'I Know an Old Lady Who Swallowed a Fly'
+Generate the lyrics of the song 'I Know an Old Lady Who Swallowed a Fly'.
 
-Write a program that generates the lyrics to the song
-"I know an old lady who swallowed a fly". While you could
-copy/paste the lyrics, or read them from a file, this
-problem is much more interesting if you approach it
-algorithmically.
+While you could copy/paste the lyrics,
+or read them from a file, this problem is much more
+interesting if you approach it algorithmically.
 
 This is a [cumulative song](http://en.wikipedia.org/wiki/Cumulative_song) of unknown origin.
 
 This is one of many common variants.
 
-```plain
+```text
 I know an old lady who swallowed a fly.
 I don't know why she swallowed the fly. Perhaps she'll die.
 
@@ -65,16 +63,25 @@ I know an old lady who swallowed a horse.
 She's dead, of course!
 ```
 
-### Submitting Exercises
+## Hints
+- Try to capture the structure of the song in your code, where you build up the song by composing its parts.
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit FoodChain.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Wikipedia [http://en.wikipedia.org/wiki/There_Was_an_Old_Lady_Who_Swallowed_a_Fly](http://en.wikipedia.org/wiki/There_Was_an_Old_Lady_Who_Swallowed_a_Fly)
-
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 

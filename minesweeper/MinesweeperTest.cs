@@ -1,5 +1,6 @@
-// This file was auto-generated based on version 1.0.0 of the canonical data.
+// This file was auto-generated based on version 1.1.0 of the canonical data.
 
+using System;
 using Xunit;
 
 public class MinesweeperTest
@@ -7,234 +8,212 @@ public class MinesweeperTest
     [Fact]
     public void No_rows()
     {
-        var input = new string[] 
-        { 
-             
-        };
-        var expected = new string[] 
-        { 
-             
-        };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        var minefield = Array.Empty<string>();
+        var expected = Array.Empty<string>();
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void No_columns()
     {
-        var input = new string[] 
-        { 
-            "" 
+        var minefield = new[]
+        {
+            ""
         };
-        var expected = new string[] 
-        { 
-            "" 
+        var expected = new[]
+        {
+            ""
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void No_mines()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "   ",
             "   ",
             "   "
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "   ",
             "   ",
             "   "
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
-    public void Board_with_only_mines()
+    public void Minefield_with_only_mines()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "***",
             "***",
             "***"
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "***",
             "***",
             "***"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Mine_surrounded_by_spaces()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "   ",
             " * ",
             "   "
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "111",
             "1*1",
             "111"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Space_surrounded_by_mines()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "***",
             "* *",
             "***"
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "***",
             "*8*",
             "***"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Horizontal_line()
     {
-        var input = new string[] 
-        { 
-            " * * " 
+        var minefield = new[]
+        {
+            " * * "
         };
-        var expected = new string[] 
-        { 
-            "1*2*1" 
+        var expected = new[]
+        {
+            "1*2*1"
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Horizontal_line_mines_at_edges()
     {
-        var input = new string[] 
-        { 
-            "*   *" 
+        var minefield = new[]
+        {
+            "*   *"
         };
-        var expected = new string[] 
-        { 
-            "*1 1*" 
+        var expected = new[]
+        {
+            "*1 1*"
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Vertical_line()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             " ",
             "*",
             " ",
             "*",
             " "
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "1",
             "*",
             "2",
             "*",
             "1"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Vertical_line_mines_at_edges()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "*",
             " ",
             " ",
             " ",
             "*"
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "*",
             "1",
             " ",
             "1",
             "*"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
     public void Cross()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             "  *  ",
             "  *  ",
             "*****",
             "  *  ",
             "  *  "
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             " 2*2 ",
             "25*52",
             "*****",
             "25*52",
             " 2*2 "
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 
     [Fact]
-    public void Large_board()
+    public void Large_minefield()
     {
-        var input = new string[] 
-        { 
+        var minefield = new[]
+        {
             " *  * ",
             "  *   ",
             "    * ",
             "   * *",
             " *  * ",
             "      "
-             
         };
-        var expected = new string[] 
-        { 
+        var expected = new[]
+        {
             "1*22*1",
             "12*322",
             " 123*2",
             "112*4*",
             "1*22*2",
             "111111"
-             
         };
-        Assert.Equal(expected, Minesweeper.Annotate(input));
+        Assert.Equal(expected, Minesweeper.Annotate(minefield));
     }
 }

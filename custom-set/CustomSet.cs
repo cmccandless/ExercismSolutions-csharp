@@ -1,75 +1,63 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
-public class CustomSet<T> : IEnumerable<T>
+public class CustomSet : IEnumerable<int>
 {
     public int Length => set.Count;
-    private Dictionary<int, T> set;
+    private Dictionary<int, int> set = new Dictionary<int, int>();
 
-    public CustomSet() { set = new Dictionary<int, T>(); }
+    public CustomSet() { }
 
-    public CustomSet(T x) : this() { Insert(x); }
+    public CustomSet(int x) : this() { Add(x); }
 
-    public CustomSet(IEnumerable<T> xs)
+    public CustomSet(IEnumerable<int> xs)
         : this()
     {
-        foreach (var x in xs) Insert(x);
+        foreach (var x in xs) Add(x);
     }
 
-    public bool IsEmpty() => Length == 0;
+    public bool Empty() => Length == 0;
 
-    public bool Contains(T x) => set.ContainsKey(x.GetHashCode());
+    public bool Contains(int x) => set.ContainsKey(x.GetHashCode());
 
-    public CustomSet<T> Insert(T x)
+    public CustomSet Add(int x)
     {
+        var s = this.ToString();
         set[x.GetHashCode()] = x;
+        set = set.OrderBy(kvp => kvp.Key).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         return this;
     }
 
-    public void Remove(T x) => set.Remove(x.GetHashCode());
+    public CustomSet Remove(int x) 
+    {
+        set.Remove(x.GetHashCode());
+        return this;
+    }
 
-    public override bool Equals(object obj) => Equals(obj as CustomSet<T>);
-    public bool Equals(CustomSet<T> other) => Length.Equals(other?.Length) && Union(other).Length == Length;
+    public override bool Equals(object obj) => Equals(obj as CustomSet);
+    public bool Equals(CustomSet other) => Length.Equals(other?.Length) &&
+        Union(other).Length == Intersection(other).Length;
 
     public override int GetHashCode() => base.GetHashCode();
 
-    IEnumerator<T> IEnumerable<T>.GetEnumerator() => set.Values.GetEnumerator();
+    IEnumerator<int> IEnumerable<int>.GetEnumerator() => set.Values.GetEnumerator();
 
     System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => set.Values.GetEnumerator();
 
-    public CustomSet<T> Union(CustomSet<T> other)
-    {
-        var result = new CustomSet<T>(this);
-        foreach (var v in other) result.Insert(v);
-        return result;
-    }
+    public CustomSet Union(CustomSet other) => new CustomSet(this.Concat(other));
 
-    public bool IsSubsetOf(CustomSet<T> other)
-    {
-        foreach (var v in this)
-            if (!other.Contains(v)) return false;
-        return true;
-    }
+    public bool Subset(CustomSet other) => this.All(other.Contains);
 
-    public bool IsDisjointFrom(CustomSet<T> other)
-    {
-        foreach (var v in this)
-            if (other.Contains(v)) return false;
-        return true;
-    }
+    public bool Disjoint(CustomSet other) => !this.Any(other.Contains);
 
-    public CustomSet<T> Intersection(CustomSet<T> other)
-    {
-        var result = new CustomSet<T>();
-        foreach (var v in this)
-            if (other.Contains(v)) result.Insert(v);
-        return result;
-    }
+    public CustomSet Intersection(CustomSet other) => this.Where(other.Contains).Aggregate(
+            new CustomSet(),
+            (acc, val) => acc.Add(val)
+        );
 
-    public CustomSet<T> Difference(CustomSet<T> other)
-    {
-        var result = new CustomSet<T>(this);
-        foreach (var v in this)
-            if (other.Contains(v)) result.Remove(v);
-        return result;
-    }
+    public CustomSet Difference(CustomSet other) => other.Aggregate(
+            new CustomSet(this),
+            (acc, val) => acc.Remove(val)
+        );
 }

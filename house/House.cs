@@ -2,24 +2,44 @@
 
 public class House
 {
-    private static string[][] words = new[] {
-        new[] {"","horse and the hound and the horn"},
-        new[] {"belonged to","farmer sowing his corn"},
-        new[] {"kept","rooster that crowed in the morn"},
-        new[] {"woke","priest all shaven and shorn"},
-        new[] {"married","man all tattered and torn"},
-        new[] {"kissed","maiden all forlorn"},
-        new[] {"milked","cow with the crumpled horn"},
-        new[] {"tossed","dog"},
-        new[] {"worried","cat"},
-        new[] {"killed","rat"},
-        new[] {"ate","malt"},
-        new[] {"lay in","house that Jack built."},
-    }.Reverse().ToArray();
-    public static string Verse(int i) => Verse(i - 1, true);
-    private static string Verse(int i, bool start) =>
-        $"{(start ? "This is" : $"that {words[i][0]}")} the {words[i][1]}{(i == 0 ? string.Empty : $"\n{Verse(i - 1, false)}")}";
-    public static string Verses(int start, int stop) =>
-        string.Join("\n\n", Enumerable.Range(start, stop - start + 1).Select(i => Verse(i)));
-    public static string Rhyme() => Verses(1, words.Length);
+    private static string[] nouns = {
+        "", "house", "malt", "rat", "cat","dog",
+        "cow with the crumpled horn",
+        "maiden all forlorn",
+        "man all tattered and torn",
+        "priest all shaven and shorn",
+        "rooster that crowed in the morn",
+        "farmer sowing his corn",
+        "horse and the hound and the horn",
+    };
+    
+    private static string[] verbs = {
+        "",
+        "lay in",
+        "ate",
+        "killed",
+        "worried",
+        "tossed",
+        "milked",
+        "kissed",
+        "married",
+        "woke",
+        "kept",
+        "belonged to",
+    };
+
+    public static string Recite(int verseNum)
+    {
+        var parade = from i in Enumerable.Range(1, verseNum - 1)
+                     let v = verseNum - i
+                     select $"that {verbs[v]} the {nouns[v]} ";
+        return $"This is the {nouns[verseNum]} {string.Join("", parade)}that Jack built.";
+    }
+
+    public static string Recite(int startVerse, int endVerse) =>
+        string.Join(
+            "\n",
+            Enumerable.Range(startVerse, endVerse - startVerse + 1)
+                .Select(i => Recite(i))
+        );
 }

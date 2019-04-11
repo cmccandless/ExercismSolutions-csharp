@@ -1,15 +1,30 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 public static class Transpose
 {
-    private static string TrimEndSingle(this string s) => s.EndsWith(" ") ? s.Substring(0, s.Length - 1) : s;
+    private static string[] PadLines(string[] lines)
+    {
+        var padded = new List<string>{lines.Last()};
+        for (int i = lines.Length - 2; i >= 0; i--)
+            padded.Insert(0, lines[i].PadRight(padded[0].Length, ' '));
+        return padded.ToArray();
+    }
 
-    public static string String(string input) => String(input.Split('\n')).TrimEnd();
+    public static char CharAtOrDefault(this string s, int i, char defaultValue = '\0') =>
+        s.Length > i ? s[i] : defaultValue;
 
-    public static string String(string[] lines) => string.Join("\n", String(lines, lines.Max(s => s.Length)));
+    private static string Column(string[] lines, int index) =>
+        new string(lines.Select(line => line.CharAtOrDefault(index))
+            .Where(c => c != '\0')
+            .ToArray());
 
-    private static string ColumnAsRow(this string[] lines, byte _, int c) =>
-        new string(lines.Select(s => c < s.Length ? s[c] : ' ').ToArray());
-
-    public static string[] String(string[] lines, int maxLen) => new byte[maxLen].Select(lines.ColumnAsRow).ToArray();
+    public static string String(string input)
+    {
+        var padded = PadLines(input.Split('\n'));
+        return string.Join(
+            "\n",
+            padded[0].Select((_, i) => Column(padded, i))
+        );
+    }
 }

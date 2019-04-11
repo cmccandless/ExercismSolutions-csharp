@@ -14,7 +14,7 @@ public static class ProteinTranslation
         ["UAG"] = "STOP", ["UGA"] = "STOP",
     };
 
-    public static string[] Translate(string codon) =>
+    public static string[] Proteins(string codon) =>
         new Queue<char>(codon).DequeueAllCodons().Select(TranslateSingle)
         .TakeWhile(p => !p.Equals("STOP")).ToArray();
 

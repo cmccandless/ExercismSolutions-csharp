@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 
-class Cipher
+class SimpleCipher
 {
     private const int A = 'a';
     private const int ZPLUS1 = 'z' + 1;
@@ -11,7 +11,7 @@ class Cipher
 
     private static Random rand = new Random();
     public readonly string Key;
-    public Cipher(string key = null)
+    public SimpleCipher(string key = null)
     {
         Key = key ?? RandomKey();
         if (!ValidKey(Key)) throw new ArgumentException();

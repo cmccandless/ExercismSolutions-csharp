@@ -33,8 +33,8 @@ public static class Tournament
     {
         using (var writer = new StreamWriter(outStream))
         {
-            writer.WriteLine(HeaderStr);
-            foreach (var line in dict.FormatEntries()) writer.WriteLine(line);
+            writer.Write(HeaderStr);
+            foreach (var line in dict.FormatEntries()) writer.Write($"\n{line}");
         }
     }
 

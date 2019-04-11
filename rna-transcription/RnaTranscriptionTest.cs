@@ -1,10 +1,15 @@
-// This file was auto-generated based on version 1.0.1 of the canonical data.
+// This file was auto-generated based on version 1.3.0 of the canonical data.
 
 using Xunit;
-using System;
 
 public class RnaTranscriptionTest
 {
+    [Fact]
+    public void Empty_rna_sequence()
+    {
+        Assert.Equal("", RnaTranscription.ToRna(""));
+    }
+
     [Fact]
     public void Rna_complement_of_cytosine_is_guanine()
     {
@@ -33,23 +38,5 @@ public class RnaTranscriptionTest
     public void Rna_complement()
     {
         Assert.Equal("UGCACCAGAAUU", RnaTranscription.ToRna("ACGTGGTCTTAA"));
-    }
-
-    [Fact]
-    public void Correctly_handles_invalid_input_rna_instead_of_dna_()
-    {
-        Assert.Throws<ArgumentException>(() => RnaTranscription.ToRna("U"));
-    }
-
-    [Fact]
-    public void Correctly_handles_completely_invalid_dna_input()
-    {
-        Assert.Throws<ArgumentException>(() => RnaTranscription.ToRna("XXX"));
-    }
-
-    [Fact]
-    public void Correctly_handles_partially_invalid_dna_input()
-    {
-        Assert.Throws<ArgumentException>(() => RnaTranscription.ToRna("ACGTXXXCTTAA"));
     }
 }

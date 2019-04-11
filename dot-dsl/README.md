@@ -1,15 +1,14 @@
-# Dot Dsl
+# DOT DSL
 
-Write a Domain Specific Language similar to the Graphviz dot language
+Write a Domain Specific Language similar to the Graphviz dot language.
 
 A [Domain Specific Language
 (DSL)](https://en.wikipedia.org/wiki/Domain-specific_language) is a
 small language optimized for a specific domain.
 
-For example the dot language of [Graphviz](http://graphviz.org) allows
-you to write a textual description of a graph which is then transformed
-into a picture by one of the graphviz tools (such as `dot`). A simple
-graph looks like this:
+For example the [DOT language](https://en.wikipedia.org/wiki/DOT_(graph_description_language)) allows
+you to write a textual description of a graph which is then transformed into a picture by one of
+the [Graphviz](http://graphviz.org/) tools (such as `dot`). A simple graph looks like this:
 
     graph {
         graph [bgcolor="yellow"]
@@ -24,16 +23,20 @@ connected by a green line on a yellow background.
 
 Create a DSL similar to the dot language.
 
-### Submitting Exercises
-
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
-
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
 ## Hints
 This exercise requires you to implement classes with a custom equality check. For more information, see [this page](https://msdn.microsoft.com/en-us/library/bsc2ak47(v=vs.110).aspx).
 
+## Running the tests
 
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit DotDsl.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 

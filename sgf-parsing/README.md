@@ -1,4 +1,4 @@
-# Sgf Parsing
+# SGF Parsing
 
 Parsing a Smart Game Format string.
 
@@ -12,15 +12,16 @@ multiple values.
 
 An SGF file may look like this:
 
-```
+```text
 (;FF[4]C[root]SZ[19];B[aa];W[ab])
 ```
 
 This is a tree with three nodes:
 
-- The top level node has two properties: FF\[4\] (key = "FF", value =
-  "4") and C\[root\](key = "C", value = "root"). (FF indicates the
-  version of SGF and C is a comment.)
+- The top level node has three properties: FF\[4\] (key = "FF", value
+  = "4"), C\[root\](key = "C", value = "root") and SZ\[19\] (key =
+  "SZ", value = "19"). (FF indicates the version of SGF, C is a
+  comment and SZ is the size of the board.)
   - The top level node has a single child which has a single property:
     B\[aa\].  (Black plays on the point encoded as "aa", which is the
     1-1 point (which is a stupid place to play)).
@@ -34,7 +35,7 @@ SGF can encode variations of play. Go players do a lot of backtracking
 in their reviews (let's try this, doesn't work, let's try that) and SGF
 supports variations of play sequences. For example:
 
-```
+```text
 (;FF[4](;B[aa];W[ab])(;B[dd];W[ee]))
 ```
 
@@ -46,7 +47,7 @@ opening to take the corner).
 
 A key can have multiple values associated with it. For example:
 
-```
+```text
 (;FF[4];AB[aa][ab][ba])
 ```
 
@@ -64,14 +65,21 @@ structure of properties. You do not need to encode knowledge about the
 data types of properties, just use the rules for the
 [text](http://www.red-bean.com/sgf/sgf4.html#text) type everywhere.
 
-### Submitting Exercises
-
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
-
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Hints
+- To parse the text, you could try to use the [Sprache](https://github.com/sprache/Sprache/blob/develop/README.md) library. You can also find a good tutorial [here](https://www.thomaslevesque.com/2017/02/23/easy-text-parsing-in-c-with-sprache/).
 
 
+## Running the tests
 
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit SgfParsing.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 

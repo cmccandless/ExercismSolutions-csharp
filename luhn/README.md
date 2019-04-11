@@ -1,67 +1,84 @@
 # Luhn
 
-Write a program that can take a number and determine whether or not it is valid per the Luhn formula.
+Given a number determine whether or not it is valid per the Luhn formula.
 
-The Luhn formula is a simple checksum formula used to validate a variety
-of identification numbers, such as credit card numbers and Canadian
-Social Insurance Numbers.
+The [Luhn algorithm](https://en.wikipedia.org/wiki/Luhn_algorithm) is
+a simple checksum formula used to validate a variety of identification
+numbers, such as credit card numbers and Canadian Social Insurance
+Numbers.
 
-The formula verifies a number against its included check digit, which is
-usually appended to a partial number to generate the full number. This
-number must pass the following test:
+The task is to check if a given string is valid.
 
-- Counting from rightmost digit (which is the check digit) and moving
-  left, double the value of every second digit.
-- For any digits that thus become 10 or more, subtract 9 from the
-  result.
-  - 1111 becomes 2121.
-  - 8763 becomes 7733 (from 2×6=12 → 12-9=3 and 2×8=16 → 16-9=7).
-- Add all these digits together.
-  - 1111 becomes 2121 sums as 2+1+2+1 to give a check digit of 6.
-  - 8763 becomes 7733, and 7+7+3+3 is 20.
+Validating a Number
+------
 
-If the total ends in 0 (put another way, if the total modulus 10 is
-congruent to 0), then the number is valid according to the Luhn formula;
-else it is not valid. So, 1111 is not valid (as shown above, it comes
-out to 6), while 8763 is valid (as shown above, it comes out to 20).
+Strings of length 1 or less are not valid. Spaces are allowed in the input,
+but they should be stripped before checking. All other non-digit characters
+are disallowed.
 
-Write a program that, given a number
+## Example 1: valid credit card number
 
-- Can check if it is valid per the Luhn formula. This should treat, for
-  example, "2323 2005 7766 3554" as valid.
-- Can return the checksum, or the remainder from using the Luhn method.
-- Can add a check digit to make the number valid per the Luhn formula and
-  return the original number plus that digit. This should give "2323 2005 7766
-  3554" in response to "2323 2005 7766 355".
+```text
+4539 1488 0343 6467
+```
 
-## About Checksums
+The first step of the Luhn algorithm is to double every second digit,
+starting from the right. We will be doubling
 
-A checksum has to do with error-detection. There are a number of different
-ways in which a checksum could be calculated.
+```text
+4_3_ 1_8_ 0_4_ 6_6_
+```
 
-When transmitting data, you might also send along a checksum that says how
-many bytes of data are being sent. That means that when the data arrives on
-the other side, you can count the bytes and compare it to the checksum. If
-these are different, then the data has been garbled in transmission.
+If doubling the number results in a number greater than 9 then subtract 9
+from the product. The results of our doubling:
 
-In the Luhn problem the final digit acts as a sanity check for all the prior
-digits. Running those prior digits through a particular algorithm should give
-you that final digit.
+```text
+8569 2478 0383 3437
+```
 
-It doesn't actually tell you if it's a real credit card number, only that it's
-a plausible one. It's the same thing with the bytes that get transmitted --
-you could have the right number of bytes and still have a garbled message. So
-checksums are a simple sanity-check, not a real in-depth verification of the
-authenticity of some data. It's often a cheap first pass, and can be used to
-quickly discard obviously invalid things.
+Then sum all of the digits:
 
+```text
+8+5+6+9+2+4+7+8+0+3+8+3+3+4+3+7 = 80
+```
 
-### Submitting Exercises
+If the sum is evenly divisible by 10, then the number is valid. This number is valid!
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+## Example 2: invalid credit card number
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+```text
+8273 1232 7352 0569
+```
+
+Double the second digits, starting from the right
+
+```text
+7253 2262 5312 0539
+```
+
+Sum the digits
+
+```text
+7+2+5+3+2+2+6+2+5+3+1+2+0+5+3+9 = 57
+```
+
+57 is not evenly divisible by 10, so this number is not valid.
+
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Luhn.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 The Luhn Algorithm on Wikipedia [http://en.wikipedia.org/wiki/Luhn_algorithm](http://en.wikipedia.org/wiki/Luhn_algorithm)
+

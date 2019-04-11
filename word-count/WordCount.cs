@@ -12,6 +12,6 @@ public class WordCount
         rgxPunctuation.Replace(phrase, " ").ToLower()
         .Split(new[] { "\n", " ", "," }, StringSplitOptions.RemoveEmptyEntries);
 
-    public static Dictionary<string, int> Countwords(string phrase) =>
+    public static Dictionary<string, int> CountWords(string phrase) =>
         FilterSplit(phrase).GroupBy(t => t).ToDictionary(grp => grp.Key, grp => grp.Count());
 }

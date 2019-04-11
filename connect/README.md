@@ -1,6 +1,6 @@
 # Connect
 
-Compute the result for a game of Hex / Polygon
+Compute the result for a game of Hex / Polygon.
 
 The abstract boardgame known as
 [Hex](https://en.wikipedia.org/wiki/Hex_%28board_game%29) / Polygon /
@@ -12,12 +12,13 @@ side directly opposite it and the other player gets assigned the two other
 sides).
 
 Your goal is to build a program that given a simple representation of a board
-computes the winner (or lack thereof).
+computes the winner (or lack thereof). Note that all games need not be "fair".
+(For example, players may have mismatched piece counts.)
 
 The boards look like this (with spaces added for readability, which won't be in
 the representation passed to your code):
 
-```        
+```text
 . O . X .
  . X X O .
   O O O X .
@@ -29,14 +30,17 @@ the representation passed to your code):
 the above example `O` has made a connection from left to right but nobody has
 won since `O` didn't connect top and bottom.
 
-### Submitting Exercises
+## Running the tests
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Connect.cs`
 
+## Further information
 
-
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 

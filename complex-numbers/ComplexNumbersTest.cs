@@ -1,7 +1,7 @@
-// This file was auto-generated based on version 1.0.0 of the canonical data.
+// This file was auto-generated based on version 1.3.0 of the canonical data.
 
-using Xunit;
 using System;
+using Xunit;
 
 public class ComplexNumbersTest
 {
@@ -52,8 +52,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 1);
         var expected = new ComplexNumber(-1, 0);
-        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(0, 1)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(0, 1)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(0, 1)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(0, 1)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -61,8 +61,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 0);
         var expected = new ComplexNumber(3, 0);
-        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(2, 0)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(2, 0)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(2, 0)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(2, 0)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -70,8 +70,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 1);
         var expected = new ComplexNumber(0, 3);
-        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(0, 2)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(0, 2)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(0, 2)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(0, 2)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -79,8 +79,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 2);
         var expected = new ComplexNumber(4, 6);
-        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(3, 4)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(3, 4)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Add(new ComplexNumber(3, 4)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Add(new ComplexNumber(3, 4)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -88,8 +88,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 0);
         var expected = new ComplexNumber(-1, 0);
-        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(2, 0)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(2, 0)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(2, 0)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(2, 0)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -97,8 +97,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 1);
         var expected = new ComplexNumber(0, -1);
-        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(0, 2)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(0, 2)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(0, 2)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(0, 2)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -106,8 +106,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 2);
         var expected = new ComplexNumber(-2, -2);
-        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(3, 4)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(3, 4)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Sub(new ComplexNumber(3, 4)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Sub(new ComplexNumber(3, 4)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -115,8 +115,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 0);
         var expected = new ComplexNumber(2, 0);
-        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(2, 0)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(2, 0)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(2, 0)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(2, 0)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -124,8 +124,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 1);
         var expected = new ComplexNumber(-2, 0);
-        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(0, 2)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(0, 2)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(0, 2)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(0, 2)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -133,8 +133,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 2);
         var expected = new ComplexNumber(-5, 10);
-        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(3, 4)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(3, 4)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Mul(new ComplexNumber(3, 4)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Mul(new ComplexNumber(3, 4)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -142,8 +142,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 0);
         var expected = new ComplexNumber(0.5, 0);
-        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(2, 0)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(2, 0)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(2, 0)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(2, 0)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -151,8 +151,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 1);
         var expected = new ComplexNumber(0.5, 0);
-        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(0, 2)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(0, 2)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(0, 2)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(0, 2)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -160,8 +160,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 2);
         var expected = new ComplexNumber(0.44, 0.08);
-        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(3, 4)).Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(3, 4)).Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Div(new ComplexNumber(3, 4)).Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Div(new ComplexNumber(3, 4)).Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -204,8 +204,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(5, 0);
         var expected = new ComplexNumber(5, 0);
-        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -213,8 +213,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 5);
         var expected = new ComplexNumber(0, -5);
-        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -222,8 +222,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 1);
         var expected = new ComplexNumber(1, -1);
-        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Conjugate().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Conjugate().Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -231,8 +231,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, Math.PI);
         var expected = new ComplexNumber(-1, 0);
-        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -240,8 +240,8 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(0, 0);
         var expected = new ComplexNumber(1, 0);
-        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 7);
     }
 
     [Fact]
@@ -249,7 +249,16 @@ public class ComplexNumbersTest
     {
         var sut = new ComplexNumber(1, 0);
         var expected = new ComplexNumber(Math.E, 0);
-        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 15);
-        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 15);
+        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 7);
+    }
+
+    [Fact]
+    public void Exponential_of_a_number_with_real_and_imaginary_part()
+    {
+        var sut = new ComplexNumber(Math.Log(2.0), Math.PI);
+        var expected = new ComplexNumber(-2, 0);
+        Assert.Equal(expected.Real(), sut.Exp().Real(), precision: 7);
+        Assert.Equal(expected.Imaginary(), sut.Exp().Imaginary(), precision: 7);
     }
 }

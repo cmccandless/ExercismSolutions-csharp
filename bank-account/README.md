@@ -1,6 +1,7 @@
 # Bank Account
 
-Bank accounts can be accessed in different ways at the same time.
+Simulate a bank account supporting opening/closing, withdrawals, and deposits
+of money. Watch out for concurrent transactions!
 
 A bank account can be accessed in multiple ways. Clients can make
 deposits and withdrawals using the internet, mobile phones, etc. Shops
@@ -25,14 +26,24 @@ it.
 
 Have fun!
 
-### Submitting Exercises
-
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
-
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Hints
+This exercise requires you to handle data related to currency and money. A normal approuch is to use the [Decimal](https://msdn.microsoft.com/en-US/library/system.decimal.aspx) struct to store currency values. 
+Note though that you then only store the numeric value of a currency. 
 
 
+## Running the tests
 
-## Submitting Incomplete Problems
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit BankAccount.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
+
+## Submitting Incomplete Solutions
 It's possible to submit an incomplete solution so you can see how others have completed the exercise.
-

@@ -1,20 +1,18 @@
 # Rectangles
 
-Count the rectangles in an ASCII diagram.
+Count the rectangles in an ASCII diagram like the one below.
 
-Create a program to count the rectangles in an ASCII diagram like the one below.
-
-```
+```text
    +--+
-   |  |
-+--+--+
+  ++  |
++-++--+
 |  |  |
 +--+--+
 ```
 
-The above diagram contains 5 rectangles:
+The above diagram contains 6 rectangles:
 
-```
+```text
 
 
 +-----+
@@ -22,7 +20,7 @@ The above diagram contains 5 rectangles:
 +-----+
 ```
 
-```
+```text
    +--+
    |  |
    |  |
@@ -30,7 +28,7 @@ The above diagram contains 5 rectangles:
    +--+
 ```
 
-```
+```text
    +--+
    |  |
    +--+
@@ -38,33 +36,44 @@ The above diagram contains 5 rectangles:
 
 ```
 
-```
-       
-       
+```text
+
+
    +--+
    |  |
    +--+
 ```
 
-```
-       
-       
+```text
+
+
 +--+
 |  |
 +--+
 ```
 
+```text
+
+  ++
+  ++
+
+
+```
+
 You may assume that the input is always a proper rectangle (i.e. the length of
 every line equals the length of the first line).
 
-### Submitting Exercises
+## Running the tests
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Rectangles.cs`
 
+## Further information
 
-
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 

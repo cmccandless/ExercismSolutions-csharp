@@ -1,30 +1,48 @@
 # Phone Number
 
-Write a program that cleans up user-entered phone numbers so that they can be sent SMS messages.
+Clean up user-entered phone numbers so that they can be sent SMS messages.
 
-The rules are as follows:
+The **North American Numbering Plan (NANP)** is a telephone numbering system used by many countries in North America like the United States, Canada or Bermuda. All NANP-countries share the same international country code: `1`.
 
-- If the phone number is less than 10 digits assume that it is bad
-  number
-- If the phone number is 10 digits assume that it is good
-- If the phone number is 11 digits and the first number is 1, trim the 1
-  and use the last 10 digits
-- If the phone number is 11 digits and the first number is not 1, then
-  it is a bad number
-- If the phone number is more than 11 digits assume that it is a bad
-  number
+NANP numbers are ten-digit numbers consisting of a three-digit Numbering Plan Area code, commonly known as *area code*, followed by a seven-digit local number. The first three digits of the local number represent the *exchange code*, followed by the unique four-digit number which is the *subscriber number*.
 
-We've provided tests, now make them pass.
+The format is usually represented as
 
-Hint: Only make one test pass at a time. Disable the others, then flip
-each on in turn after you get the current failing one to pass.
+```text
+(NXX)-NXX-XXXX
+```
 
-### Submitting Exercises
+where `N` is any digit from 2 through 9 and `X` is any digit from 0 through 9.
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+Your task is to clean up differently formatted telephone numbers by removing punctuation and the country code (1) if present.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+For example, the inputs
+- `+1 (613)-995-0253`
+- `613-995-0253`
+- `1 613 995 0253`
+- `613.995.0253`
+
+should all produce the output
+
+`6139950253`
+
+**Note:** As this exercise only deals with telephone numbers used in NANP-countries, only 1 is considered a valid country code.
+
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit PhoneNumber.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Event Manager by JumpstartLab [http://tutorials.jumpstartlab.com/projects/eventmanager.html](http://tutorials.jumpstartlab.com/projects/eventmanager.html)
+

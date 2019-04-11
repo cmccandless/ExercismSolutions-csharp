@@ -1,15 +1,25 @@
-﻿public class BinarySearch
+﻿using System;
+
+public static class BinarySearch
 {
-    private int[] array;
-    public BinarySearch(int[] array) => this.array = array;
+    public static int Find(int[] array, int x)
+    {
+        if (array.Length == 0) return -1;
 
-    public int Find(int x) => 
-        array.Length == 0 ? -1 : 
-        Find(x, 0, array.Length - 1, array.Length / 2);
+        var p = 0;
+        var r = array.Length;
+        while (p < r)
+        {
+            var q = (r - p) / 2 + p;
+            if (array[q] == x) return q;
 
-    private int Find(int x, int p, int q, int i) =>
-        array[i].Equals(x) ? i :
-        q <= p ? -1 :
-        array[i].CompareTo(x) < 0 ? Find(x, i + 1, q, (q + i + 1) / 2) :
-        Find(x, p, i - 1, (i - 1 + p) / 2);
+            if (array[q] < x)
+            {
+                if (p == q) return -1;
+                p = q;
+            }
+            else r = q;
+        }
+        return -1;
+    }
 }

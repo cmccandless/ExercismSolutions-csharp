@@ -1,65 +1,61 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 public class WordSearch
 {
-    private string[] lines;
-    private int Height => lines.Length;
-    private int Width => lines[0].Length;
+    public WordSearch(string grid) =>
+        this.Grid = grid.Split('\n').Select(line => line.ToArray()).ToArray();
 
-    private static readonly int[] vals = new[] { -1, 0, 1 };
-    private static readonly Point[] directions =
-        (from x in vals
-         from y in vals
-         where x != 0 || y != 0
-         select new Point(x, y)).ToArray();
+    private char[][] Grid { get; }
 
-    public WordSearch(string puzzle) { lines = puzzle.Split('\n'); }
+    private bool IsValidPoint(int x, int y) => y.IsBetween(0, Grid.Length) && x.IsBetween(0, Grid[y].Length);
 
-    public Tuple<Tuple<int, int>, Tuple<int, int>> Find(string word) => FindAll(word).FirstOrDefault();
-
-    private bool IsMatch(string word, Point start, Point dir)
+    private bool Match(string word, (int x, int y) start, int xStep, int yStep, out (int x, int y) stop)
     {
-        var pi = new Point(start);
-        for (int i = 1; i < word.Length; i++)
+        stop = start;
+        for (int i = 0; i < word.Length; i++)
         {
-            pi += dir;
-            if (!pi.InRange(Height, Width) || word[i] != lines.At(pi)) return false;
+            if (!IsValidPoint(stop.x, stop.y) || word[i] != Grid[stop.y][stop.x])
+                return false;
+            stop = stop.Increment(xStep, yStep);
         }
+        stop = stop.Increment(1 - xStep, 1 - yStep);
         return true;
     }
 
-    public IEnumerable<Tuple<Tuple<int, int>, Tuple<int, int>>> FindAll(string word) =>
-        from y1 in Enumerable.Range(0, Height)
-        from x1 in Enumerable.Range(0, Width)
-        let p0 = new Point(x1, y1)
-        where word[0] == lines.At(p0)
-        from dir in directions
-        where IsMatch(word, p0, dir)
-        let stop = p0 + (word.Length - 1) * dir
-        select Tuple.Create(p0.AsTuple, stop.AsTuple);
+    private bool FindAt(string word, (int x, int y) start, out ((int x, int y) start, (int x, int y) stop) result)
+    {
+        result = (start.Increment(), start);
+        for (int dy = -1; dy < 2; dy++)
+        {
+            for (int dx = -1; dx < 2; dx++)
+            {
+                if (dy == 0 && dx == 0) continue;
+                if (Match(word, start, dx, dy, out result.stop))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private ((int, int), (int, int))? Find(string word)
+    {
+        ((int, int), (int, int)) result;
+        for (int y = 0; y < Grid.Length; y++)
+            for (int x = 0; x < Grid[y].Length; x++)
+                if (FindAt(word, (x, y), out result))
+                    return result;
+        return null;
+    }
+
+    public Dictionary<string, ((int, int), (int, int))?> Search(string[] wordsToSearchFor) =>
+        wordsToSearchFor.ToDictionary(word => word, Find);
 }
-public static class Ext { public static char At(this string[] m, Point p) => m[p.Y][p.X]; }
-public class Point
+
+static class Extensions
 {
-    public int X, Y;
-
-    public Point(int x, int y) { X = x; Y = y; }
-    public Point(Point p) : this(p.X, p.Y) { }
-
-    public override bool Equals(object obj) => Equals(obj as Point);
-    public bool Equals(Point other) => X.Equals(other?.X) && Y.Equals(other.Y);
-    public override int GetHashCode() => base.GetHashCode();
-
-    public static Point operator +(Point a, Point b) =>
-        new Point(a.X + b.X, a.Y + b.Y);
-    public static Point operator *(int k, Point a) => new Point(a.X * k, a.Y * k);
-
-    public override string ToString() => $"({X},{Y})";
-
-    public Tuple<int, int> AsTuple => Tuple.Create(X + 1, Y + 1);
-
-    public bool InRange(int yMax, int xMax, int yMin = 0, int xMin = 0) =>
-        Y >= yMin && Y < yMax && X >= xMin && X < xMax;
+    public static bool IsBetween(this int x, int minInclusive, int maxExclusive) => minInclusive <= x && x < maxExclusive;
+    public static (int x, int y) Increment(this (int x, int y) p, int dx = 1, int dy = 1) => (x: p.x + dx, y: p.y + dy);
 }

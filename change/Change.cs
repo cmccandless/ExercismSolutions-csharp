@@ -35,12 +35,14 @@ public static class Change
             SetPosition(targetValue, coinSet[c - 1], m, t, c);
     }
 
-    public static int[] Calculate(int targetValue, int[] coinSet)
+    public static int[] FindFewestCoins(int[] coinSet, int targetValue)
     {
         Validate(targetValue, coinSet);
         var m = new int[targetValue + 1, coinSet.Length + 1][];
         for (int c = 0; c <= coinSet.Length; c++) m[0, c] = new int[0];
         for (int t = 1; t <= targetValue; t++) SetRow(targetValue, coinSet, m, t);
+        if (m[targetValue, coinSet.Length] == null)
+            throw new ArgumentException("no possible combination");
         return m[targetValue, coinSet.Length];
     }
 }

@@ -21,11 +21,13 @@ public static class AllYourBase
             a.Add(s / i);
             s %= i;
         }
+        if (a.Count == 0)
+            a.Add(0);
         return a.ToArray();
     }
     private static bool ValidBases(params int[] bases) => bases.All(b => b >= 2);
     private static bool ValidDigits(this int[] digits, int _base) =>
-        digits.Any(x => x > 0) && digits.First() != 0 && digits.All(x => x >= 0 && x < _base);
+        digits.All(x => x >= 0 && x < _base);
     public static int[] Rebase(int inputBase, int[] digits, int outputBase)
     {
         if (!ValidBases(inputBase, outputBase) || !digits.ValidDigits(inputBase))

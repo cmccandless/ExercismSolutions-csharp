@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-public class TwelveDaysSong
+public class TwelveDays
 {
     private enum Ordinal
     {
@@ -20,8 +20,7 @@ public class TwelveDaysSong
 
     private static string[] verses = new string[]
     {
-        "",
-        "a Partridge in a Pear Tree.",
+        "and a Partridge in a Pear Tree.",
         "two Turtle Doves",
         "three French Hens",
         "four Calling Birds",
@@ -35,22 +34,14 @@ public class TwelveDaysSong
         "twelve Drummers Drumming",
     };
 
-    public static string Sing() => Verses(1, 12);
+    private static string OnTheDay(int verseNum) =>
+        $"On the {(Ordinal)verseNum} day of Christmas my true love gave to me:";
 
-    public static string Verse(int verse) => BuildVerse(verse);
+    private static string Parade(int verseNum) =>
+        string.Join(", ", Enumerable.Range(1, verseNum).Select(i => verses[verseNum - i]));
 
-    public static string Verses(int start, int end) =>
-        string.Join(string.Empty, 
-            Enumerable.Range(start, end - start + 1)
-            .Select(i => $"{BuildVerse(i)}\n"));
+    public static string Recite(int verseNum) => $"{OnTheDay(verseNum)} {Parade(verseNum)}".Replace(": and", ":");
 
-    private static string BuildVerse(int verse)
-    {
-        var parts = Enumerable.Range(1, verse)
-            .Select(i => verses[i])
-            .Reverse()
-            .ToArray();
-        if (verse > 1) parts[parts.Length - 1] = $"and {parts[parts.Length - 1]}";
-        return $"On the {(Ordinal)verse} day of Christmas my true love gave to me, {string.Join(", ", parts)}\n";
-    }
+    public static string Recite(int startVerse, int stopVerse) =>
+        string.Join("\n", Enumerable.Range(startVerse, stopVerse - startVerse + 1).Select(i => Recite(i)));
 }

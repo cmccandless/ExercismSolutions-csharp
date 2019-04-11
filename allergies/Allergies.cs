@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 
+public enum Allergen
+{
+	Eggs=0x1,
+	Peanuts=0x2,
+	Shellfish=0x4,
+	Strawberries=0x8,
+	Tomatoes=0x10,
+	Chocolate=0x20,
+	Pollen=0x40,
+	Cats=0x80,
+}
+
 public class Allergies
 {
-	public enum Allergy
-	{
-		eggs=0x1,
-		peanuts=0x2,
-		shellfish=0x4,
-		strawberries=0x8,
-		tomatoes=0x10,
-		chocolate=0x20,
-		pollen=0x40,
-		cats=0x80,
-	}
+	public List<Allergen> List() =>
+		(from Allergen allergen in Enum.GetValues(typeof(Allergen))
+		 where AllergyScore.HasFlag(allergen)
+		 select allergen).ToList();
 
-	public List<string> List() =>
-		(from Allergy allergy in Enum.GetValues(typeof(Allergy))
-		 where AllergyScore.HasFlag(allergy)
-		 select allergy.ToString()).ToList();
-
-	public Allergy AllergyScore { get; set; }
+	public Allergen AllergyScore { get; set; }
 
 	public Allergies(int allergyScore)
 	{
-		AllergyScore = (Allergy)allergyScore;
+		AllergyScore = (Allergen)allergyScore;
 	}
 
-	public bool IsAllergicTo(string allergies) =>
-		 AllergyScore.HasFlag((Allergy)Enum.Parse(typeof(Allergy), allergies));
+	public bool IsAllergicTo(Allergen allergen) =>
+		 AllergyScore.HasFlag(allergen);
 }

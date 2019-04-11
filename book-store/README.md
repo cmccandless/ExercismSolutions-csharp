@@ -1,25 +1,22 @@
 # Book Store
 
-To try and encourage more sales of different books from a popular 5 book series, a bookshop has decided to offer discounts of multiple-book purchases.
+To try and encourage more sales of different books from a popular 5 book
+series, a bookshop has decided to offer discounts on multiple book purchases.
 
-To try and encourage more sales of the 5 different books
-they sell of a popular series, a bookshop has decided to
-offer discounts of multi-book purchases. 
-
-One copy of any of the five books costs $8. 
+One copy of any of the five books costs $8.
 
 If, however, you buy two different books, you get a 5%
 discount on those two books.
 
-If you buy 3 different books, you get a 10% discount. 
+If you buy 3 different books, you get a 10% discount.
 
 If you buy 4 different books, you get a 20% discount.
 
-If you buy all 5, you get a 25% discount. 
+If you buy all 5, you get a 25% discount.
 
 Note: that if you buy four books, of which 3 are
 different titles, you get a 10% discount on the 3 that
-form part of a set, but the fourth book still costs $8. 
+form part of a set, but the fourth book still costs $8.
 
 Your mission is to write a piece of code to calculate the
 price of any conceivable shopping basket (containing only
@@ -33,7 +30,7 @@ For example, how much does this basket of books cost?
 - 2 copies of the third book
 - 1 copy of the fourth book
 - 1 copy of the fifth book
- 
+
 One way of grouping these 8 books is:
 
 - 1 group of 5 --> 25% discount (1st,2nd,3rd,4th,5th)
@@ -70,16 +67,23 @@ For a total of $51.20
 
 And $51.20 is the price with the biggest discount.
 
-### Submitting Exercises
+## Running the tests
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit BookStore.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Inspired by the harry potter kata from Cyber-Dojo. [http://cyber-dojo.org](http://cyber-dojo.org)
 
-## Submitting Incomplete Problems
+## Submitting Incomplete Solutions
 It's possible to submit an incomplete solution so you can see how others have completed the exercise.
-

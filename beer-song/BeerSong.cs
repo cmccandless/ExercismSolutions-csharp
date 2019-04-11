@@ -14,8 +14,8 @@ public static class BeerSong
 
     private static string Verse(int verse, string bottles) =>
         $"{bottles} on the wall, {bottles.ToLower()}.\n" +
-        $"{Action(verse)}, {Bottles(verse - 1).ToLower()} on the wall.\n";
+        $"{Action(verse)}, {Bottles(verse - 1).ToLower()} on the wall.";
 
-    public static string Verses(int start, int stop) =>
-        string.Join("\n", Enumerable.Range(stop, start - stop + 1).Reverse().Select(Verse));
+    public static string Recite(int start, int count) =>
+        string.Join("\n\n", Enumerable.Range(start - count + 1, count).Reverse().Select(Verse));
 }

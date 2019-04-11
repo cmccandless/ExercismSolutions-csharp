@@ -1,33 +1,32 @@
 # Sum Of Multiples
 
-Write a program that, given a number, can find the sum of all the multiples of particular numbers up to but not including that number.
+Given a number, find the sum of all the unique multiples of particular numbers up to
+but not including that number.
 
-If we list all the natural numbers up to but not including 20 that are
-multiples of either 3 or 5, we get 3, 5, 6 and 9, 10, 12, 15, and 18.
+If we list all the natural numbers below 20 that are multiples of 3 or 5,
+we get 3, 5, 6, 9, 10, 12, 15, and 18.
 
 The sum of these multiples is 78.
 
-Write a program that can find the sum of the multiples of a given set of
-numbers.
+## Hints
+This exercise requires you to process a collection of data. You can simplify your code by using LINQ (Language Integrated Query).
+For more information, see [this page](https://docs.microsoft.com/en-us/dotnet/articles/standard/using-linq).
 
-This exercise is currently under revision.
-You are still free to do this exercise and submit solutions.
-Depending on whether this track has been updated recently,
-the tests may differ between this track and other tracks.
+## Running the tests
 
-In most tracks, the set of numbers must be explicitly provided.
-In some other tracks, if no set of numbers is given, it defaults to 3 and 5.
-We would like all tracks to require the set of numbers be explicit.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-If you would like to help out, please join us at
-https://github.com/exercism/x-common/issues/198.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit SumOfMultiples.cs`
 
-### Submitting Exercises
+## Further information
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
-
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 A variation on Problem 1 at Project Euler [http://projecteuler.net/problem=1](http://projecteuler.net/problem=1)
+

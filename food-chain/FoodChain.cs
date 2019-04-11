@@ -36,7 +36,7 @@ public static class FoodChain
         }
         return string.Join("\n", list);
     }
-    public static string Verse(int n) => Verse(n, n);
-    public static string Verse(int start, int stop) =>
+    public static string Recite(int n) => Recite(n, n);
+    public static string Recite(int start, int stop) =>
         string.Join("\n\n", Range(stop + 1, start).Select(GetVerse));
 }

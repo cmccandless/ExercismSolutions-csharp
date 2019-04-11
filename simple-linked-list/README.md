@@ -1,6 +1,6 @@
 # Simple Linked List
 
-Write a simple linked list implementation that uses Elements and a List
+Write a simple linked list implementation that uses Elements and a List.
 
 The linked list is a fundamental data structure in computer science,
 often used in the implementation of other data structures. They're
@@ -21,12 +21,25 @@ and provide functions to reverse a linked list and convert to and from arrays.
 When implementing this in a language with built-in linked lists,
 implement your own abstract data type.
 
-### Submitting Exercises
+## Hints
+This exercise requires you to create a linked list data structure which can be iterated. This requires you to implement the IEnumerable\<T> interface. 
+For more information, see [this page](https://msdn.microsoft.com/en-us/library/9eekhta0(v=vs.110).aspx).
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+## Running the tests
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit SimpleLinkedList.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Inspired by 'Data Structures and Algorithms with Object-Oriented Design Patterns in Ruby', singly linked-lists. [http://www.brpreiss.com/books/opus8/html/page96.html#SECTION004300000000000000000](http://www.brpreiss.com/books/opus8/html/page96.html#SECTION004300000000000000000)
+

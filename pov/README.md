@@ -1,14 +1,12 @@
-# Pov
+# POV
 
-Reparent a graph on a selected node
-
-# Tree Reparenting
+Reparent a graph on a selected node.
 
 This exercise is all about re-orientating a graph to see things from a different
 point of view. For example family trees are usually presented from the
 ancestor's perspective:
 
-```
+```text
     +------0------+
     |      |      |
   +-1-+  +-2-+  +-3-+
@@ -20,7 +18,7 @@ But the same information can be presented from the perspective of any other node
 in the graph, by pulling it up to the root and dragging its relationships along
 with it. So the same graph from 6's perspective would look like:
 
-```
+```text
         6
         |
   +-----2-----+
@@ -39,16 +37,21 @@ a different leaf node) can be seen to follow the path 6-2-0-3-9
 This exercise involves taking an input graph and re-orientating it from the point
 of view of one of the nodes.
 
-### Submitting Exercises
+## Running the tests
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Pov.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Adaptation of exercise from 4clojure [https://www.4clojure.com/](https://www.4clojure.com/)
-
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 

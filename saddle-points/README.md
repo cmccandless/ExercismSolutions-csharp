@@ -1,21 +1,21 @@
 # Saddle Points
 
-Write a program that detects saddle points in a matrix.
+Detect saddle points in a matrix.
 
 So say you have a matrix like so:
 
-```plain
-    0  1  2
+```text
+    1  2  3
   |---------
-0 | 9  8  7
-1 | 5  3  2     <--- saddle point at (1,0)
-2 | 6  6  7
+1 | 9  8  7
+2 | 5  3  2     <--- saddle point at column 1, row 2, with value 5
+3 | 6  6  7
 ```
 
-It has a saddle point at (1, 0).
+It has a saddle point at column 1, row 2.
 
 It's called a "saddle point" because it is greater than or equal to
-every element in its row and the less than or equal to every element in
+every element in its row and less than or equal to every element in
 its column.
 
 A matrix may have zero or more saddle points.
@@ -23,15 +23,31 @@ A matrix may have zero or more saddle points.
 Your code should be able to provide the (possibly empty) list of all the
 saddle points for any given matrix.
 
+The matrix can have a different number of rows and columns (Non square).
+
 Note that you may find other definitions of matrix saddle points online,
 but the tests for this exercise follow the above unambiguous definition.
 
-### Submitting Exercises
+## Hints
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+For this exercise, you will need to create a set of factors using tuples.
+For more information on tuples, see [this link](https://msdn.microsoft.com/en-us/library/system.tuple(v=vs.110).aspx).
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit SaddlePoints.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 J Dalbey's Programming Practice problems [http://users.csc.calpoly.edu/~jdalbey/103/Projects/ProgrammingPractice.html](http://users.csc.calpoly.edu/~jdalbey/103/Projects/ProgrammingPractice.html)
+

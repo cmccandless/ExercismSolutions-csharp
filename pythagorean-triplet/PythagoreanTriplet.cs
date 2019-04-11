@@ -2,26 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-public class Triplet
+public class PythagoreanTriplet
 {
-    public int A, B, C;
-    public Triplet(int a, int b, int c) { A = a; B = b; C = c; }
-
-    public int Sum() => A + B + C;
-
-    public int Product() => A * B * C;
-
-    public bool IsPythagorean() => A * A + B * B == C * C;
-
-    public static IEnumerable<Triplet> Where(int sum = 0, int minFactor = 1, int maxFactor = int.MaxValue) =>
-        from a in Range(minFactor, maxFactor)
-        from b in Range(a, maxFactor)
-        let c = Math.Sqrt(a * a + b * b)
-        where c % 1 == 0 && (sum < 1 || a + b + c == sum)
-        select new Triplet(a, b, (int)c);
-
-    public static IEnumerable<int> Range(int start, int stop)
-    {
-        while (start < stop) yield return start++;
-    }
+    public static IEnumerable<(int a, int b, int c)> TripletsWithSum(int sum) =>
+        from a in Enumerable.Range(3, sum / 2 - 3)
+        let a2 = a * a
+        from b in Enumerable.Range(a, sum / 2 - a)
+        let b2 = b * b
+        let c = sum - a - b
+        where a2 + b2 == c * c
+        select (a, b, c);
 }

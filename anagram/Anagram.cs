@@ -11,7 +11,7 @@ public class Anagram
         Sorted = Word.SortLetters();
     }
 
-    public string[] Anagrams(string[] candidates) =>
+    public string[] FindAnagrams(string[] candidates) =>
         (from candidate in candidates
          let lowered = candidate.ToLower()
          where !lowered.Equals(Word)

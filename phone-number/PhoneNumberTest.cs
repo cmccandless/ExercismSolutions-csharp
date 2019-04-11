@@ -1,7 +1,7 @@
-// This file was auto-generated based on version 1.2.0 of the canonical data.
+// This file was auto-generated based on version 1.7.0 of the canonical data.
 
-using Xunit;
 using System;
+using Xunit;
 
 public class PhoneNumberTest
 {
@@ -76,16 +76,58 @@ public class PhoneNumberTest
     }
 
     [Fact]
-    public void Invalid_if_area_code_does_not_start_with_2_9()
+    public void Invalid_if_area_code_starts_with_0()
+    {
+        var phrase = "(023) 456-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_area_code_starts_with_1()
     {
         var phrase = "(123) 456-7890";
         Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
     }
 
     [Fact]
-    public void Invalid_if_exchange_code_does_not_start_with_2_9()
+    public void Invalid_if_exchange_code_starts_with_0()
     {
         var phrase = "(223) 056-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_exchange_code_starts_with_1()
+    {
+        var phrase = "(223) 156-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_area_code_starts_with_0_on_valid_11_digit_number()
+    {
+        var phrase = "1 (023) 456-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_area_code_starts_with_1_on_valid_11_digit_number()
+    {
+        var phrase = "1 (123) 456-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_exchange_code_starts_with_0_on_valid_11_digit_number()
+    {
+        var phrase = "1 (223) 056-7890";
+        Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
+    }
+
+    [Fact]
+    public void Invalid_if_exchange_code_starts_with_1_on_valid_11_digit_number()
+    {
+        var phrase = "1 (223) 156-7890";
         Assert.Throws<ArgumentException>(() => PhoneNumber.Clean(phrase));
     }
 }

@@ -4,12 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public enum ForthError { DivisionByZero, StackUnderflow, InvalidWord, UnknownWord }
-class ForthException : Exception
-{
-	public ForthError Error;
-	public ForthException(ForthError error) => this.Error = error;
-}
 static class Forth
 {
 	private static bool IsNumber(string s)
@@ -25,10 +19,10 @@ static class Forth
 										let c = (char)i
 										where !nonSeparators.Contains(c) && !char.IsLetterOrDigit(c)
 										select c).ToArray();
-	public static string Eval(string expr)
+	public static string Evaluate(string[] programText)
 	{
-		if (expr.Equals(string.Empty)) return expr;
-		var inputStack = new Stack<string>(expr.ToUpper().Split(separators).Reverse());
+		if (!programText.Any()) return string.Empty;
+		var inputStack = new Stack<string>(string.Join(" ", programText).ToUpper().Split(separators).Reverse());
 		var s = new Stack<int>();
 		var defines = new Dictionary<string, string[]>();
 		while (inputStack.Any())
@@ -40,43 +34,36 @@ static class Forth
 				foreach (var w in defines[x].Reverse()) inputStack.Push(w);
 				continue;
 			}
-			try
+			switch (x)
 			{
-				switch (x)
-				{
-					case "+": s.Push(s.Pop() + s.Pop()); break;
-					case "-": s.Push(-s.Pop() + s.Pop()); break;
-					case "*": s.Push(s.Pop() * s.Pop()); break;
-					case "/":
-						if (s.Peek() == 0) throw new ForthException(ForthError.DivisionByZero);
-						s.Push((int)((1 / (double)s.Pop()) * s.Pop()));
-						break;
-					case "DUP": s.Push(s.Peek()); break;
-					case "DROP": s.Pop(); break;
-					case "SWAP":
-						foreach (var t in new[] { s.Pop(), s.Pop() }) s.Push(t);
-						break;
-					case "OVER":
-						foreach (var t in new[] { s.Pop(), s.Peek() }) s.Push(t);
-						break;
-					case ":":
-						var key = inputStack.Pop();
-						if (IsNumber(key)) throw new ForthException(ForthError.InvalidWord);
-						var values = new List<string>();
+				case "+": s.Push(s.Pop() + s.Pop()); break;
+				case "-": s.Push(-s.Pop() + s.Pop()); break;
+				case "*": s.Push(s.Pop() * s.Pop()); break;
+				case "/":
+					if (s.Peek() == 0) throw new InvalidOperationException();
+					s.Push((int)((1 / (double)s.Pop()) * s.Pop()));
+					break;
+				case "DUP": s.Push(s.Peek()); break;
+				case "DROP": s.Pop(); break;
+				case "SWAP":
+					foreach (var t in new[] { s.Pop(), s.Pop() }) s.Push(t);
+					break;
+				case "OVER":
+					foreach (var t in new[] { s.Pop(), s.Peek() }) s.Push(t);
+					break;
+				case ":":
+					var key = inputStack.Pop();
+					if (IsNumber(key)) throw new InvalidOperationException();
+					var values = new List<string>();
+					x = inputStack.Pop();
+					while (!x.Equals(";"))
+					{
+						values.Add(x);
 						x = inputStack.Pop();
-						while (!x.Equals(";"))
-						{
-							values.Add(x);
-							x = inputStack.Pop();
-						}
-						defines[key] = values.ToArray();
-						break;
-					default: throw new ForthException(ForthError.UnknownWord);
-				}
-			}
-			catch (InvalidOperationException)
-			{
-				throw new ForthException(ForthError.StackUnderflow);
+					}
+					defines[key] = values.SelectMany(v => defines.ContainsKey(v) ? defines[v] : new[] {v}).ToArray();
+					break;
+				default: throw new InvalidOperationException();
 			}
 		}
 		return string.Join(" ", s.Reverse());

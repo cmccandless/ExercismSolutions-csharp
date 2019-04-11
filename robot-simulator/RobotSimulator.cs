@@ -1,49 +1,44 @@
-﻿public enum Bearing
+﻿using System;
+
+public enum Direction
 {
-    North = 1,
+    North,
     East,
     South,
-    West,
+    West
 }
-public class Coordinate
-{
-    public int[] pos;
-    public Coordinate(params int[] p) { pos = p; }
-    public override bool Equals(object obj) => Equals(obj as Coordinate);
-    public bool Equals(Coordinate other) => pos[0].Equals(other?.pos[0]) && pos[1].Equals(other.pos[1]);
-    public override int GetHashCode() => base.GetHashCode();
-}
+
 public class RobotSimulator
 {
-    private int bearing { get; set; }
-    public Bearing Bearing
+    public RobotSimulator(Direction direction, int x, int y)
     {
-        get => (Bearing)bearing;
-        set => bearing = (int)value;
-    }
-    public Coordinate Coordinate { get; set; }
-    public RobotSimulator(Bearing _bearing, Coordinate coord)
-    {
-        Bearing = _bearing;
-        Coordinate = coord;
+        Direction = direction;
+        X = x;
+        Y = y;
     }
 
-    public void Simulate(string instructions)
+    public Direction Direction { get; private set; }
+    public int X { get; private set; }
+    public int Y { get; private set; }
+
+    public void Move(string instructions)
     {
-        foreach (var ch in instructions.ToUpper())
+        foreach (var instruction in instructions.ToCharArray())
         {
-            switch (ch)
+            switch(instruction)
             {
-                case 'A': Advance(); break;
-                case 'R': TurnRight(); break;
-                case 'L': TurnLeft(); break;
+                case 'R': Direction = (Direction)(((int)Direction + 1) % 4); break;
+                case 'L': Direction = (Direction)(((int)Direction + 3) % 4); break;
+                case 'A':
+                    switch (Direction)
+                    {
+                        case Direction.North: Y++; break;
+                        case Direction.South: Y--; break;
+                        case Direction.East: X++; break;
+                        case Direction.West: X--; break;
+                    }
+                    break;
             }
         }
     }
-
-    public void Advance() => Coordinate.pos[bearing % 2] += bearing < 3 ? 1 : -1;
-
-    public void TurnRight() => bearing = (bearing % 4) + 1;
-
-    public void TurnLeft() => bearing = ((bearing + 2) % 4) + 1;
 }

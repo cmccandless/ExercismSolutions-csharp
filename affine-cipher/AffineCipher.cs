@@ -2,6 +2,39 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
+public static class AffineCipher
+{
+    private static readonly char[] Letters =
+        Enumerable.Range(0, 26).Select(i => (char)(i + 'a')).ToArray();
+    private static int ALPHA_SIZE => Letters.Length;
+
+    private static (int x, int y) MinMax(int x, int y) => (Math.Min(x, y), Math.Max(x, y));
+
+    private static int GCD((int x, int y) t) =>
+        t.x == 0 ? t.y : GCD(MinMax(t.x, t.y % t.x));
+
+    private static int GCD(int x, int y) => GCD(MinMax(x, y));
+
+    private static bool Coprime(int x, int y) => GCD(x, y) == 1;
+
+    public static string Encode(string plainText, int a, int b)
+    {
+        if (!Coprime(a, ALPHA_SIZE)) throw new ArgumentException();
+        return plainText.Transcode(x => a * x + b).Slices(5).Join(" ");
+    }
+
+    public static string Decode(string cipheredText, int a, int b)
+    {
+        if (!Coprime(a, ALPHA_SIZE)) throw new ArgumentException();
+        int mmi;
+        for (mmi = 1; (a * mmi) % ALPHA_SIZE != 1 && mmi < ALPHA_SIZE; mmi++);
+        Func<int, int> decode(int _mmi) =>
+            (int index) => _mmi * (index - b + 2 * ALPHA_SIZE);
+
+        return cipheredText.Transcode(decode(mmi));
+    }
+}
 static class Extensions
 {
     public static IEnumerable<List<T>> Slices<T>(this IEnumerable<T> col, int sliceSize)
@@ -40,38 +73,6 @@ static class Extensions
 
     public static string Join<T>(this IEnumerable<T> col, string delimiter, Func<T, string> formatter) =>
         string.Join(delimiter, col.Select(formatter));
-}
-
-public static class AffineCipher
-{
-    private static char[] letters = Enumerable.Range(0, 26).Select(i => (char)(i + 'a')).ToArray();
-    private static int ALPHA_SIZE => letters.Length;
-
-    private static (int x, int y) minMax(int x, int y) => (Math.Min(x, y), Math.Max(x, y));
-
-    private static int GCD((int x, int y) t) =>
-        t.x == 0 ? t.y : GCD(minMax(t.x, t.y % t.x));
-
-    private static int GCD(int x, int y) => GCD(minMax(x, y));
-
-    private static bool Coprime(int x, int y) => GCD(x, y) == 1;
-
-    public static string Encode(string plainText, int a, int b)
-    {
-        if (!Coprime(a, ALPHA_SIZE)) throw new ArgumentException();
-        return plainText.Transcode(x => a * x + b).Slices(5).Join(" ");
-    }
-
-    public static string Decode(string cipheredText, int a, int b)
-    {
-        if (!Coprime(a, ALPHA_SIZE)) throw new ArgumentException();
-        int mmi;
-        for (mmi = 1; (a * mmi) % ALPHA_SIZE != 1 && mmi < ALPHA_SIZE; mmi++);
-        Func<int, int> decode(int _mmi) =>
-            (int index) => _mmi * (index - b + 2 * ALPHA_SIZE);
-
-        return cipheredText.Transcode(decode(mmi));
-    }
 }
 
 static class DebugExtensions

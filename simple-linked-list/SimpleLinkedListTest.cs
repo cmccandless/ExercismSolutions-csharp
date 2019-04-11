@@ -56,7 +56,7 @@ public class SimpleLinkedListTest
         Assert.Equal(2, list.Next.Next.Next.Next.Value);
     }
 
-    [Theory]
+    [Theory(Skip = "Remove to run test")]
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(10)]
@@ -69,7 +69,7 @@ public class SimpleLinkedListTest
         Assert.Equal(values.Reverse(), reversed);
     }
 
-    [Theory]
+    [Theory(Skip = "Remove to run test")]
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(10)]

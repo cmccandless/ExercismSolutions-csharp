@@ -1,6 +1,6 @@
 # Simple Cipher
 
-Implement a simple shift cipher like Caesar and a more secure substitution cipher
+Implement a simple shift cipher like Caesar and a more secure substitution cipher.
 
 ## Step 1
 
@@ -13,8 +13,8 @@ for A, and so with the others."
 
 Ciphers are very straight-forward algorithms that allow us to render
 text less readable while still allowing easy deciphering. They are
-vulnerable to many forms of cryptoanalysis, but we are lucky that
-generally our little sisters are not cryptoanalysts.
+vulnerable to many forms of cryptanalysis, but we are lucky that
+generally our little sisters are not cryptanalysts.
 
 The Caesar Cipher was used for some messages from Julius Caesar that
 were sent afield. Now Caesar knew that the cipher wasn't very good, but
@@ -23,13 +23,17 @@ being a couple letters off was sufficient so that people couldn't
 recognize the few words that they did know.
 
 Your task is to create a simple shift cipher like the Caesar Cipher.
-This image is a great example of the Caesar Cipher: ![Caesar Cipher][1]
+This image is a great example of the Caesar Cipher:
 
-Here are some examples:
+![Caesar Cipher][1]
 
-    @cipher = Cipher.new
-    @cipher.encode("iamapandabear") #=> "ldpdsdqgdehdu"
-    @cipher.decode("ldpdsdqgdehdu") #=> "iamapandabear"
+For example:
+
+Giving "iamapandabear" as input to the encode function returns the cipher "ldpdsdqgdehdu". Obscure enough to keep our message secret in transit.
+
+When "ldpdsdqgdehdu" is put into the decode function it would return
+the original "iamapandabear" letting your friend read your original
+message.
 
 ## Step 2
 
@@ -39,10 +43,11 @@ shift distance. This is called a substitution cipher.
 
 Here's an example:
 
-    @cipher = Cipher.new("aaaaaaaaaaaaaaaaaa")
-    @cipher.encode("iamapandabear") #=> "iamapandabear"
-    @cipher = Cipher.new("ddddddddddddddddd")
-    @cipher.encode("imapandabear") #=> "lpdsdqgdehdu"
+Given the key "aaaaaaaaaaaaaaaaaa", encoding the string "iamapandabear"
+would return the original "iamapandabear".
+
+Given the key "ddddddddddddddddd", encoding our string "iamapandabear"
+would return the obscured "ldpdsdqgdehdu"
 
 In the example above, we've set a = 0 for the key value. So when the
 plaintext is added to the key, we end up with the same message coming
@@ -53,19 +58,10 @@ would get the same thing as the Caesar Cipher.
 
 The weakest link in any cipher is the human being. Let's make your
 substitution cipher a little more fault tolerant by providing a source
-of randomness and ensuring that they key is not composed of numbers or
-capital letters.
+of randomness and ensuring that the key contains only lowercase letters.
 
 If someone doesn't submit a key at all, generate a truly random key of
-at least 100 characters in length, accessible via Cipher#key (the #
-syntax means instance variable)
-
-If the key submitted has capital letters or numbers, throw an
-ArgumentError with a message to that effect.
-
-Some examples:
-    @cipher = Cipher.new
-    @cipher.key #=> "duxrceqyaimciuucnelkeoxjhdyduucpmrxmaivacmybmsdrzwqxvbxsygzsabdjmdjabeorttiwinfrpmpogvabiofqexnohrqu"
+at least 100 alphanumeric characters in length.
 
 ## Extensions
 
@@ -79,15 +75,24 @@ If you want to go farther in this field, the questions begin to be about
 how we can exchange keys in a secure way. Take a look at [Diffie-Hellman
 on Wikipedia][dh] for one of the first implementations of this scheme.
 
-[1]: http://upload.wikimedia.org/wikipedia/en/7/75/Caesar3.png
+[1]: https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Caesar_cipher_left_shift_of_3.svg/320px-Caesar_cipher_left_shift_of_3.svg.png
 [dh]: http://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
 
-### Submitting Exercises
+## Running the tests
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+To run the tests, run the command `dotnet test` from within the exercise directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit SimpleCipher.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Substitution Cipher at Wikipedia [http://en.wikipedia.org/wiki/Substitution_cipher](http://en.wikipedia.org/wiki/Substitution_cipher)
+

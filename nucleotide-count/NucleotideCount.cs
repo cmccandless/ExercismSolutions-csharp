@@ -6,13 +6,9 @@ public class NucleotideCount
     public NucleotideGroup NucleotideCounts { get; } = new NucleotideGroup();
 
     public int Count(char ch) => NucleotideCounts[ch];
+    public static Dictionary<char, int> Count(string dna) => new NucleotideCount(dna).NucleotideCounts;
 
     public NucleotideCount(string dna) { foreach (var ch in dna) NucleotideCounts[ch]++; }
-}
-
-public class InvalidNucleotideException : Exception
-{
-    public InvalidNucleotideException(char ch) : base(ch.ToString()) { }
 }
 
 public class NucleotideGroup : Dictionary<char, int>
@@ -29,7 +25,7 @@ public class NucleotideGroup : Dictionary<char, int>
         get
         {
             if (ContainsKey(key)) return base[key];
-            throw new InvalidNucleotideException(key);
+            throw new ArgumentException();
         }
         set { base[key] = value; }
     }

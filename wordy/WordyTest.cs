@@ -1,10 +1,16 @@
-// This file was auto-generated based on version 1.0.0 of the canonical data.
+// This file was auto-generated based on version 1.5.0 of the canonical data.
 
-using Xunit;
 using System;
+using Xunit;
 
 public class WordyTest
 {
+    [Fact]
+    public void Just_a_number()
+    {
+        Assert.Equal(5, Wordy.Answer("What is 5?"));
+    }
+
     [Fact]
     public void Addition()
     {
@@ -99,5 +105,41 @@ public class WordyTest
     public void Non_math_question()
     {
         Assert.Throws<ArgumentException>(() => Wordy.Answer("Who is the President of the United States?"));
+    }
+
+    [Fact]
+    public void Reject_problem_missing_an_operand()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is 1 plus?"));
+    }
+
+    [Fact]
+    public void Reject_problem_with_no_operands_or_operators()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is?"));
+    }
+
+    [Fact]
+    public void Reject_two_operations_in_a_row()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is 1 plus plus 2?"));
+    }
+
+    [Fact]
+    public void Reject_two_numbers_in_a_row()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is 1 plus 2 1?"));
+    }
+
+    [Fact]
+    public void Reject_postfix_notation()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is 1 2 plus?"));
+    }
+
+    [Fact]
+    public void Reject_prefix_notation()
+    {
+        Assert.Throws<ArgumentException>(() => Wordy.Answer("What is plus 1 2?"));
     }
 }

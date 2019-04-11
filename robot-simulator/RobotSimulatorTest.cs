@@ -1,59 +1,184 @@
-﻿using Xunit;
+// This file was auto-generated based on version 3.1.0 of the canonical data.
+
+using Xunit;
 
 public class RobotSimulatorTest
 {
     [Fact]
-    public void Turn_right_edge_case()
+    public void A_robot_is_created_with_a_position_and_a_direction_robots_are_created_with_a_position_and_direction()
     {
-        var robot = new RobotSimulator(Bearing.West, new Coordinate(0, 0));
-        robot.TurnRight();
-        Assert.Equal(Bearing.North, robot.Bearing);
+        var sut = new RobotSimulator(Direction.North, 0, 0);
+        Assert.Equal(Direction.North, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
     }
 
     [Fact]
-    public void Turn_left_edge_case()
+    public void A_robot_is_created_with_a_position_and_a_direction_negative_positions_are_allowed()
     {
-        var robot = new RobotSimulator(Bearing.North, new Coordinate(0, 0));
-        robot.TurnLeft();
-        Assert.Equal(Bearing.West, robot.Bearing);
+        var sut = new RobotSimulator(Direction.South, -1, -1);
+        Assert.Equal(Direction.South, sut.Direction);
+        Assert.Equal(-1, sut.X);
+        Assert.Equal(-1, sut.Y);
     }
 
     [Fact]
-    public void Robbie()
+    public void Rotates_the_robots_direction_90_degrees_clockwise_changes_the_direction_from_north_to_east()
     {
-        var robbie = new RobotSimulator(Bearing.East, new Coordinate(-2, 1));
-        Assert.Equal(Bearing.East, robbie.Bearing);
-        Assert.Equal(new Coordinate(-2, 1), robbie.Coordinate);
-
-        robbie.Simulate("RLAALAL");
-        Assert.Equal(Bearing.West, robbie.Bearing);
-        Assert.Equal(new Coordinate(0, 2), robbie.Coordinate);
+        var sut = new RobotSimulator(Direction.North, 0, 0);
+        sut.Move("R");
+        Assert.Equal(Direction.East, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
     }
 
     [Fact]
-    public void Clutz()
+    public void Rotates_the_robots_direction_90_degrees_clockwise_changes_the_direction_from_east_to_south()
     {
-        var clutz = new RobotSimulator(Bearing.North, new Coordinate(0, 0));
-        clutz.Simulate("LAAARALA");
-        Assert.Equal(Bearing.West, clutz.Bearing);
-        Assert.Equal(new Coordinate(-4, 1), clutz.Coordinate);
+        var sut = new RobotSimulator(Direction.East, 0, 0);
+        sut.Move("R");
+        Assert.Equal(Direction.South, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
     }
 
     [Fact]
-    public void Sphero()
+    public void Rotates_the_robots_direction_90_degrees_clockwise_changes_the_direction_from_south_to_west()
     {
-        var sphero = new RobotSimulator(Bearing.East, new Coordinate(2, -7));
-        sphero.Simulate("RRAAAAALA");
-        Assert.Equal(Bearing.South, sphero.Bearing);
-        Assert.Equal(new Coordinate(-3, -8), sphero.Coordinate);
+        var sut = new RobotSimulator(Direction.South, 0, 0);
+        sut.Move("R");
+        Assert.Equal(Direction.West, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
     }
 
     [Fact]
-    public void Roomba()
+    public void Rotates_the_robots_direction_90_degrees_clockwise_changes_the_direction_from_west_to_north()
     {
-        var roomba = new RobotSimulator(Bearing.South, new Coordinate(8, 4));
-        roomba.Simulate("LAAARRRALLLL");
-        Assert.Equal(Bearing.North, roomba.Bearing);
-        Assert.Equal(new Coordinate(11, 5), roomba.Coordinate);
+        var sut = new RobotSimulator(Direction.West, 0, 0);
+        sut.Move("R");
+        Assert.Equal(Direction.North, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Rotates_the_robots_direction_90_degrees_counter_clockwise_changes_the_direction_from_north_to_west()
+    {
+        var sut = new RobotSimulator(Direction.North, 0, 0);
+        sut.Move("L");
+        Assert.Equal(Direction.West, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Rotates_the_robots_direction_90_degrees_counter_clockwise_changes_the_direction_from_west_to_south()
+    {
+        var sut = new RobotSimulator(Direction.West, 0, 0);
+        sut.Move("L");
+        Assert.Equal(Direction.South, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Rotates_the_robots_direction_90_degrees_counter_clockwise_changes_the_direction_from_south_to_east()
+    {
+        var sut = new RobotSimulator(Direction.South, 0, 0);
+        sut.Move("L");
+        Assert.Equal(Direction.East, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Rotates_the_robots_direction_90_degrees_counter_clockwise_changes_the_direction_from_east_to_north()
+    {
+        var sut = new RobotSimulator(Direction.East, 0, 0);
+        sut.Move("L");
+        Assert.Equal(Direction.North, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Moves_the_robot_forward_1_space_in_the_direction_it_is_pointing_increases_the_y_coordinate_one_when_facing_north()
+    {
+        var sut = new RobotSimulator(Direction.North, 0, 0);
+        sut.Move("A");
+        Assert.Equal(Direction.North, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(1, sut.Y);
+    }
+
+    [Fact]
+    public void Moves_the_robot_forward_1_space_in_the_direction_it_is_pointing_decreases_the_y_coordinate_by_one_when_facing_south()
+    {
+        var sut = new RobotSimulator(Direction.South, 0, 0);
+        sut.Move("A");
+        Assert.Equal(Direction.South, sut.Direction);
+        Assert.Equal(0, sut.X);
+        Assert.Equal(-1, sut.Y);
+    }
+
+    [Fact]
+    public void Moves_the_robot_forward_1_space_in_the_direction_it_is_pointing_increases_the_x_coordinate_by_one_when_facing_east()
+    {
+        var sut = new RobotSimulator(Direction.East, 0, 0);
+        sut.Move("A");
+        Assert.Equal(Direction.East, sut.Direction);
+        Assert.Equal(1, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Moves_the_robot_forward_1_space_in_the_direction_it_is_pointing_decreases_the_x_coordinate_by_one_when_facing_west()
+    {
+        var sut = new RobotSimulator(Direction.West, 0, 0);
+        sut.Move("A");
+        Assert.Equal(Direction.West, sut.Direction);
+        Assert.Equal(-1, sut.X);
+        Assert.Equal(0, sut.Y);
+    }
+
+    [Fact]
+    public void Where_r_turn_right_l_turn_left_and_a_advance_the_robot_can_follow_a_series_of_instructions_and_end_up_with_the_correct_position_and_direction_instructions_to_move_east_and_north_from_readme()
+    {
+        var sut = new RobotSimulator(Direction.North, 7, 3);
+        sut.Move("RAALAL");
+        Assert.Equal(Direction.West, sut.Direction);
+        Assert.Equal(9, sut.X);
+        Assert.Equal(4, sut.Y);
+    }
+
+    [Fact]
+    public void Where_r_turn_right_l_turn_left_and_a_advance_the_robot_can_follow_a_series_of_instructions_and_end_up_with_the_correct_position_and_direction_instructions_to_move_west_and_north()
+    {
+        var sut = new RobotSimulator(Direction.North, 0, 0);
+        sut.Move("LAAARALA");
+        Assert.Equal(Direction.West, sut.Direction);
+        Assert.Equal(-4, sut.X);
+        Assert.Equal(1, sut.Y);
+    }
+
+    [Fact]
+    public void Where_r_turn_right_l_turn_left_and_a_advance_the_robot_can_follow_a_series_of_instructions_and_end_up_with_the_correct_position_and_direction_instructions_to_move_west_and_south()
+    {
+        var sut = new RobotSimulator(Direction.East, 2, -7);
+        sut.Move("RRAAAAALA");
+        Assert.Equal(Direction.South, sut.Direction);
+        Assert.Equal(-3, sut.X);
+        Assert.Equal(-8, sut.Y);
+    }
+
+    [Fact]
+    public void Where_r_turn_right_l_turn_left_and_a_advance_the_robot_can_follow_a_series_of_instructions_and_end_up_with_the_correct_position_and_direction_instructions_to_move_east_and_north()
+    {
+        var sut = new RobotSimulator(Direction.South, 8, 4);
+        sut.Move("LAAARRRALLLL");
+        Assert.Equal(Direction.North, sut.Direction);
+        Assert.Equal(11, sut.X);
+        Assert.Equal(5, sut.Y);
     }
 }

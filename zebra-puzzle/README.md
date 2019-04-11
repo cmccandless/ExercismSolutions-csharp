@@ -1,6 +1,6 @@
 # Zebra Puzzle
 
-Write a program that solves the zebra puzzle.
+Solve the zebra puzzle.
 
 1. There are five houses.
 2. The Englishman lives in the red house.
@@ -20,21 +20,31 @@ Write a program that solves the zebra puzzle.
 
 Each of the five houses is painted a different color, and their
 inhabitants are of different national extractions, own different pets,
-drink different beverages and smoke different brands of cigarets.
+drink different beverages and smoke different brands of cigarettes.
 
 Which of the residents drinks water?
 Who owns the zebra?
 
-### Submitting Exercises
+## Hints
+This exercise requires you to process a collection of data. You can simplify your code by using lazy sequences to improve performance.
+For more information, see [this page](https://xosfaere.wordpress.com/2010/03/21/lazy-evaluation-in-csharp/).
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit ZebraPuzzle.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Wikipedia [https://en.wikipedia.org/wiki/Zebra_Puzzle](https://en.wikipedia.org/wiki/Zebra_Puzzle)
-
-## Submitting Incomplete Problems
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
 

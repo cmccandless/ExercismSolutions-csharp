@@ -2,27 +2,45 @@
 
 Calculate the date of meetups.
 
-Typically meetups happen on the same day of the week.
+Typically meetups happen on the same day of the week.  In this exercise, you
+will take a description of a meetup date, and return the actual meetup date.
 
-Examples are
+Examples of general descriptions are:
 
-- the first Monday
-- the third Tuesday
-- the Wednesteenth
-- the last Thursday
+- The first Monday of January 2017
+- The third Tuesday of January 2017
+- The wednesteenth of January 2017
+- The last Thursday of January 2017
 
-Note that "Monteenth", "Tuesteenth", etc are all made up words. There
-was a meetup whose members realised that there are exactly 7 days that
-end in '-teenth'. Therefore, one is guaranteed that each day of the week
+The descriptors you are expected to parse are:
+first, second, third, fourth, fifth, last, monteenth, tuesteenth, wednesteenth,
+thursteenth, friteenth, saturteenth, sunteenth
+
+Note that "monteenth", "tuesteenth", etc are all made up words. There was a
+meetup whose members realized that there are exactly 7 numbered days in a month
+that end in '-teenth'. Therefore, one is guaranteed that each day of the week
 (Monday, Tuesday, ...) will have exactly one date that is named with '-teenth'
 in every month.
 
-### Submitting Exercises
+Given examples of a meetup dates, each containing a month, day, year, and
+descriptor calculate the date of the actual meetup.  For example, if given
+"The first Monday of January 2017", the correct meetup date is 2017/1/2.
 
-Note that, when trying to submit an exercise, make sure you're exercise file you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+## Running the tests
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit Meetup.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
 
 Jeremy Hinegardner mentioned a Boulder meetup that happens on the Wednesteenth of every month [https://twitter.com/copiousfreetime](https://twitter.com/copiousfreetime)
+

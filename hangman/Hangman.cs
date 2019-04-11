@@ -1,49 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive;
+using System.Reactive.Subjects;
 
-public enum HangmanStatus { Busy, Lose, Win }
-public class HangmanGame
-{
-
-	public delegate void OnStateChanged(object sender, HangmanState state);
-	public OnStateChanged StateChanged;
-
-	internal readonly string Word;
-	internal List<char> Misses = new List<char>();
-	internal HashSet<char> Hits = new HashSet<char>();
-	private HangmanState state;
-	public HangmanGame(string word) { this.Word = word; } 
-	public void Start()
-	{
-		this.state = new HangmanState(this);
-		if (StateChanged != null) StateChanged(this, state);
-	}
-	public void Guess(char ch)
-	{
-		if (Word.Contains(ch) && !Hits.Contains(ch)) Hits.Add(ch);
-		else Misses.Add(ch);
-		if (StateChanged != null) StateChanged(this, state);
-	}
-}
 public class HangmanState
 {
-	private readonly HangmanGame game;
-	public HangmanStatus Status
-	{
-		get
-		{
-			if (MaskedWord.Equals(game.Word))
-				return HangmanStatus.Win;
-			else if (RemainingGuesses <= 0)
-				return HangmanStatus.Lose;
-			return HangmanStatus.Busy;
-		}
-	}
-	public int RemainingGuesses { get { return 9 - game.Misses.Count; } }
-	public string MaskedWord { get { return string.Join(string.Empty, 
-		game.Word.Select(ch=>game.Hits.Contains(ch)?ch:'_')); } }
-	public HangmanState(HangmanGame game) { this.game = game; }
+    public string MaskedWord { get; }
+    public ImmutableHashSet<char> GuessedChars { get; }
+    public int RemainingGuesses { get; }
+
+    public HangmanState(string maskedWord, ImmutableHashSet<char> guessedChars, int remainingGuesses)
+    {
+        MaskedWord = maskedWord;
+        GuessedChars = guessedChars;
+        RemainingGuesses = remainingGuesses;
+    }
+}
+
+public class TooManyGuessesException : Exception
+{
+}
+
+public class Hangman
+{
+	private const int MaxGuesses = 9;
+
+    public IObservable<HangmanState> StateObservable { get; }
+    public IObserver<char> GuessObserver { get; }
+
+    public Hangman(string word)
+    {
+		var emptySet = new HashSet<char>();
+		var subject = new BehaviorSubject<HangmanState>(new HangmanState(
+			Mask(word, emptySet),
+			emptySet.ToImmutableHashSet(),
+			MaxGuesses
+		));
+
+		this.StateObservable = subject;
+
+		this.GuessObserver = Observer.Create<char>(ch =>
+			{
+				var guessedChars = new HashSet<char>(subject.Value.GuessedChars);
+				var remainingGuesses = subject.Value.RemainingGuesses;
+				if (!word.Contains(ch) || guessedChars.Contains(ch))
+					remainingGuesses--;
+				guessedChars.Add(ch);
+				var masked = Mask(word, guessedChars);
+				if (masked == word)
+				{
+					subject.OnCompleted();
+				}
+				else if (remainingGuesses < 0) // Game over
+				{
+					subject.OnError(new TooManyGuessesException());
+				}
+				else
+				{
+					subject.OnNext(new HangmanState(
+						masked,
+						guessedChars.ToImmutableHashSet(),
+						remainingGuesses
+					));
+				}
+			}
+		);
+    }
+
+	private static string Mask(string word, HashSet<char> guessedChars) => new string(
+		word.ToCharArray().Select(ch => guessedChars.Contains(ch) ? ch : '_').ToArray()
+	);
 }

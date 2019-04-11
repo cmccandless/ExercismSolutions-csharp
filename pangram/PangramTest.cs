@@ -1,4 +1,4 @@
-// This file was auto-generated based on version 1.1.0 of the canonical data.
+// This file was auto-generated based on version 1.4.1 of the canonical data.
 
 using Xunit;
 
@@ -8,6 +8,12 @@ public class PangramTest
     public void Sentence_empty()
     {
         Assert.False(Pangram.IsPangram(""));
+    }
+
+    [Fact]
+    public void Recognizes_a_perfect_lower_case_pangram()
+    {
+        Assert.True(Pangram.IsPangram("abcdefghijklmnopqrstuvwxyz"));
     }
 
     [Fact]
@@ -23,9 +29,9 @@ public class PangramTest
     }
 
     [Fact]
-    public void Another_missing_character_x()
+    public void Another_missing_character_e_g_h()
     {
-        Assert.False(Pangram.IsPangram("the quick brown fish jumps over the lazy dog"));
+        Assert.False(Pangram.IsPangram("five boxing wizards jump quickly at it"));
     }
 
     [Fact]

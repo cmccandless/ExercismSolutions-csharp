@@ -1,14 +1,14 @@
-// This file was auto-generated based on version 1.0.0 of the canonical data.
+// This file was auto-generated based on version 1.3.0 of the canonical data.
 
-using Xunit;
+using System;
 using System.Collections.Generic;
+using Xunit;
 
 public class NucleotideCountTest
 {
     [Fact]
     public void Empty_strand()
     {
-        var sut = new NucleotideCount("");
         var expected = new Dictionary<char, int>
         {
             ['A'] = 0,
@@ -16,13 +16,25 @@ public class NucleotideCountTest
             ['G'] = 0,
             ['T'] = 0
         };
-        Assert.Equal(expected, sut.NucleotideCounts);
+        Assert.Equal(expected, NucleotideCount.Count(""));
+    }
+
+    [Fact]
+    public void Can_count_one_nucleotide_in_single_character_input()
+    {
+        var expected = new Dictionary<char, int>
+        {
+            ['A'] = 0,
+            ['C'] = 0,
+            ['G'] = 1,
+            ['T'] = 0
+        };
+        Assert.Equal(expected, NucleotideCount.Count("G"));
     }
 
     [Fact]
     public void Strand_with_repeated_nucleotide()
     {
-        var sut = new NucleotideCount("GGGGGGG");
         var expected = new Dictionary<char, int>
         {
             ['A'] = 0,
@@ -30,13 +42,12 @@ public class NucleotideCountTest
             ['G'] = 7,
             ['T'] = 0
         };
-        Assert.Equal(expected, sut.NucleotideCounts);
+        Assert.Equal(expected, NucleotideCount.Count("GGGGGGG"));
     }
 
     [Fact]
     public void Strand_with_multiple_nucleotides()
     {
-        var sut = new NucleotideCount("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC");
         var expected = new Dictionary<char, int>
         {
             ['A'] = 20,
@@ -44,12 +55,12 @@ public class NucleotideCountTest
             ['G'] = 17,
             ['T'] = 21
         };
-        Assert.Equal(expected, sut.NucleotideCounts);
+        Assert.Equal(expected, NucleotideCount.Count("AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC"));
     }
 
     [Fact]
     public void Strand_with_invalid_nucleotides()
     {
-        Assert.Throws<InvalidNucleotideException>(() => new NucleotideCount("AGXXACT"));
+        Assert.Throws<ArgumentException>(() => NucleotideCount.Count("AGXXACT"));
     }
 }

@@ -25,75 +25,61 @@ internal class Person
 }
 public static class ZebraPuzzle
 {
+    public static Nationality DrinksWater() => solution.First(p => p.Drink == Drink.Water).Nation;
+
+    public static Nationality OwnsZebra() => solution.First(p => p.Pet == Pet.Zebra).Nation;
+
     private static int[][] perms =
         Permutations.AllPermutations(new[] { 0, 1, 2, 3, 4 }).ToArray();
 
     private static IEnumerable<Person> solution { get; } = Solve().FirstOrDefault();
 
-    public static Nationality? WhoDrinks(Drink drink) =>
-        solution.FirstOrDefault(p => p.Drink == drink)?.Nation;
-
-    public static Nationality? WhoOwns(Pet pet) =>
-        solution.FirstOrDefault(p => p.Pet == pet)?.Nation;
-
     private static Dictionary<T, int> AsDict<T>(int[] a) =>
         a.Zip(Enum.GetValues(typeof(T)).Cast<T>(), (v, k) => new { k, v })
         .ToDictionary(x => x.k, x => x.v);
 
-    private static string Multi(params int[] a) => string.Join("", a);
-
     private static bool NextTo(int a, int b) => Math.Abs(a - b) == 1;
 
-    internal static IEnumerable<IEnumerable<Person>> Solve()
-    {
-        return from nations in perms.Select(AsDict<Nationality>)
-                where nations[Nationality.Norwegian] == Position.First
+    internal static IEnumerable<IEnumerable<Person>> Solve() =>
+        from nations in perms.Select(AsDict<Nationality>)
+        where nations[Nationality.Norwegian] == Position.First
 
-                join colors in from c in perms.Select(AsDict<Color>)
-                                where c[Color.Green] == c[Color.Ivory] + 1
-                                where c[Color.Blue] == Position.Second
-                                select c
-                on nations[Nationality.Englishman] equals colors[Color.Red]
+        join colors in from c in perms.Select(AsDict<Color>)
+                       where c[Color.Green] == c[Color.Ivory] + 1
+                       where c[Color.Blue] == Position.Second
+                       select c
+        on nations[Nationality.Englishman] equals colors[Color.Red]
 
-                join smokes in perms.Select(AsDict<Smoke>)
-                on Multi(colors[Color.Yellow],
-                    nations[Nationality.Japanese])
-                equals Multi(smokes[Smoke.Kools],
-                    smokes[Smoke.Parliaments])
+        join smokes in perms.Select(AsDict<Smoke>)
+        on (colors[Color.Yellow], nations[Nationality.Japanese])
+        equals (smokes[Smoke.Kools], smokes[Smoke.Parliaments])
 
-                join pets in perms.Select(AsDict<Pet>)
-                on Multi(nations[Nationality.Spaniard],
-                    smokes[Smoke.OldGold])
-                equals Multi(pets[Pet.Dog],
-                    pets[Pet.Snails])
+        join pets in perms.Select(AsDict<Pet>)
+        on (nations[Nationality.Spaniard], smokes[Smoke.OldGold])
+        equals (pets[Pet.Dog], pets[Pet.Snails])
 
-                where NextTo(smokes[Smoke.Chesterfields], pets[Pet.Fox]) &&
-                    NextTo(smokes[Smoke.Kools], pets[Pet.Horse])
+        where NextTo(smokes[Smoke.Chesterfields], pets[Pet.Fox]) &&
+            NextTo(smokes[Smoke.Kools], pets[Pet.Horse])
 
-                join drinks in from d in perms.Select(AsDict<Drink>)
-                                where d[Drink.Milk] == Position.Middle
-                                select d
-                on Multi(colors[Color.Green],
-                    nations[Nationality.Ukrainian],
-                    smokes[Smoke.LuckyStrike])
-                equals Multi(drinks[Drink.Coffee],
-                    drinks[Drink.Tea],
-                    drinks[Drink.OrangeJuice])
+        join drinks in perms.Select(AsDict<Drink>)
+        on (Position.Middle, colors[Color.Green],
+            nations[Nationality.Ukrainian], smokes[Smoke.LuckyStrike])
+        equals (drinks[Drink.Milk], drinks[Drink.Coffee],
+            drinks[Drink.Tea], drinks[Drink.OrangeJuice])
 
-                select from kn in nations
-                        join kc in colors on kn.Value equals kc.Value
-                        join kd in drinks on kn.Value equals kd.Value
-                        join ks in smokes on kn.Value equals ks.Value
-                        join kp in pets on kn.Value equals kp.Value
-                        select new Person
-                        {
-                            Nation = kn.Key,
-                            Color = kc.Key,
-                            Drink = kd.Key,
-                            Smoke = ks.Key,
-                            Pet = kp.Key
-                        };
-    }
+        select from kn in nations
+               join kc in colors on kn.Value equals kc.Value
+               join kd in drinks on kn.Value equals kd.Value
+               join ks in smokes on kn.Value equals ks.Value
+               join kp in pets on kn.Value equals kp.Value
+               select new Person
+               {
+                   Nation = kn.Key,
+                   Color = kc.Key,
+                   Drink = kd.Key,
+                   Smoke = ks.Key,
+                   Pet = kp.Key
+               };
 }
 
 public static class Permutations

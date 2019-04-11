@@ -4,7 +4,7 @@ using System.Linq;
 
 public class VariableLengthQuantity
 {
-    private static uint[] ToBytes(uint i) =>
+    private static uint[] Encode(uint i) =>
         (from j in Enumerable.Range(0, 5)
             let highBit = (j == 0 ? 0x0u : 0x80)
             select ((i >> (j * 7)) & 0x7f) | highBit)
@@ -12,10 +12,10 @@ public class VariableLengthQuantity
         .SkipWhile(x => x == 0x80)
         .ToArray();
 
-    public static uint[] ToBytes(uint[] inputs) =>
-        inputs.SelectMany(ToBytes).ToArray();
+    public static uint[] Encode(uint[] inputs) =>
+        inputs.SelectMany(Encode).ToArray();
 
-    public static uint[] FromBytes(uint[] inputs)
+    public static uint[] Decode(uint[] inputs)
     {
         var results = new List<uint>();
         var indexed = inputs.Select((x, i) => new { x, i });

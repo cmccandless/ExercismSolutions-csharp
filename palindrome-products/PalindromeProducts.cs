@@ -1,87 +1,99 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-static class Palindrome
+public static class PalindromeProducts
 {
-	public static Product Smallest(int end)
+	public static (int, (int, int)[]) Smallest(int minFactor, int maxFactor)
 	{
-		return Smallest(1, end);
-	}
-	public static Product Smallest(int start, int end)
-	{
-		return GetPalindromes(start, end).Min();
-	}
-	public static Product Largest(int end)
-	{
-		return Largest(1, end);
-	}
-	public static Product Largest(int start, int end)
-	{
-		return GetPalindromes(start, end).Max();
-	}
-
-	private static IEnumerable<Product> GetPalindromes(int start, int end)
-	{
-		return from p in GetAllPalindromes(start, end)
-			   from f in p.Factors
-			   group f by p.Value into grp
-			   select new Product(grp.Key) { Factors = grp.ToList() };
-	}
-
-	private static IEnumerable<Product> GetAllPalindromes(int start, int end)
-	{
-		for (int i = start; i <= end; i++)
-		{
-			for (int j = i; j <= end; j++)
+		if (minFactor > maxFactor)
+			throw new ArgumentException();
+		for (int m = minFactor; m <= maxFactor; m++)
+			for (int n = minFactor; n <= m; n++)
 			{
-				var value = i * j;
-				if (Product.IsValuePalindrome(value)) yield return new Product(i, j);
+				var p = new Product(m, n);
+				if (p.Palindrome)
+					return p.AsResult();
 			}
-		}
+		throw new ArgumentException();
 	}
 
-	public class Product : IComparable
+	public static (int, (int, int)[]) Largest(int minFactor, int maxFactor)
 	{
-		public int Value { get; private set; }
-		public List<Tuple<int, int>> Factors { get; set; }
-		public bool IsPalindrome
+		if (minFactor > maxFactor)
+			throw new ArgumentException();
+		var best = new Product(minFactor, minFactor);
+		for (int m = maxFactor; m >= minFactor; m--)
 		{
-			get
-			{
-				return IsValuePalindrome(Value);
-			}
+			var n = Math.Max((int)(m * 0.9) - 10, minFactor);
+			for (; n <= m; n++)
+				best = best.KeepLargest(new Product(m, n));
+			if (best.Palindrome)
+				return Product.Create(
+					best.Value, minFactor, maxFactor
+				).AsResult();
 		}
-		public Product(int value)
-		{
-			Value = value;
-		}
-		public Product(int a, int b)
-		{
-			Value = a * b;
-			Factors = new[] { Tuple.Create(a, b) }.ToList();
-		}
-
-		public static bool IsValuePalindrome(int num)
-		{
-			int temp = num;
-			int rem = 0;
-			while (num > 0)
-			{
-				rem = rem * 10 + num % 10;
-				num /= 10;
-			}
-			return temp == rem;
-		}
-
-		public int CompareTo(object obj)
-		{
-			var other = obj as Product;
-			if (other == null) return 1;
-
-			return this.Value.CompareTo(other.Value);
-		}
+		throw new ArgumentException();
 	}
+}
+
+class Product
+{
+	private static bool IsPalindrome(string s) =>
+		s == new String(s.Reverse().ToArray());
+	public static bool IsPalindrome(int n) => Product.IsPalindrome($"{n}");
+
+	public bool Palindrome { get; }
+	public int Value { get; }
+	public (int, int)[] Factors { get; }
+	public Product(int m, int n)
+	{
+		this.Value = m * n;
+		if (m < n)
+			(m, n) = (n, m);
+		this.Factors = new[] {(m, n)};
+		this.Palindrome = Product.IsPalindrome(this.Value);
+	}
+
+	private Product(int value, (int, int)[] factors, bool isPalindrome)
+	{
+		this.Value = value;
+		this.Factors = factors;
+		this.Palindrome = isPalindrome;
+	}
+
+	public Product Merge(Product other) => new Product(
+			this.Value,
+			this.Factors.Concat(other.Factors).OrderBy(x => x).ToArray(),
+			true
+		);
+
+	private Product Keep(Product other, Func<Product, Product, bool> isBetter)
+	{
+		if (!other.Palindrome) return this;
+		if (!this.Palindrome || isBetter(other, this)) return other;
+		if (isBetter(this, other)) return this;
+		return Merge(other);
+	}
+	
+	public Product KeepSmallest(Product other) =>
+		Keep(other, (a, b) => a.Value < b.Value);
+	public Product KeepLargest(Product other) =>
+		Keep(other, (a, b) => a.Value > b.Value);
+
+	public (int, (int, int)[]) AsResult() => (this.Value, this.Factors);
+
+	public static Product Create(int value, int minFactor, int maxFactor) =>
+		new Product(
+			value,
+			(
+				from m in Enumerable.Range(minFactor, maxFactor)
+					.TakeWhile(m => m <= value / m)
+				where value % m == 0
+				let n = value / m
+				where n <= maxFactor
+				select (m, n)
+			).ToArray(),
+			Product.IsPalindrome(value)
+		);
 }

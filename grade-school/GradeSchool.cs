@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class School
+public class GradeSchool
 {
     private Dictionary<int, List<string>> byGrade = new Dictionary<int, List<string>>();
 
-    // public List<string> Roster() => byGrade.Values.SelectMany(v => v).OrderBy(x => x).ToList();
     public List<string> Roster() =>
         (from kvp in byGrade
          from student in kvp.Value

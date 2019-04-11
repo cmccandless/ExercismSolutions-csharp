@@ -1,25 +1,45 @@
-﻿# Two Fer
-
-Create a sentence of the form "One for X, one for me."
+# Two Fer
 
 `Two-fer` or `2-fer` is short for two for one. One for you and one for me.
 
-```plain
-"One for X, one for me."
+Given a name, return a string with the message:
+
+```text
+One for X, one for me.
 ```
 
-When X is a name or "you".
+Where X is the given name.
 
-If the given name is "Alice", the result should be "One for Alice, one for me." If no name is given, the result should be "One for you, one for me."
+However, if the name is missing, return the string:
 
-### Submitting Exercises
+```text
+One for you, one for me.
+```
 
-Note that, when trying to submit an exercise, make sure the exercise file that you're submitting is in the `exercism/csharp/<exerciseName>` directory.
+Here are some examples:
 
-For example, if you're submitting `bob.cs` for the Bob exercise, the submit command would be something like `exercism submit <path_to_exercism_dir>/csharp/bob/bob.cs`.
+|Name    |String to return 
+|:-------|:------------------
+|Alice   |One for Alice, one for me. 
+|Bob     |One for Bob, one for me.
+|        |One for you, one for me.
+|Zaphod  |One for Zaphod, one for me.
+
+## Running the tests
+
+To run the tests, run the command `dotnet test` from within the exercise directory.
+
+Initially, only the first test will be enabled. This is to encourage you to solve the exercise one step at a time.
+Once you get the first test passing, remove the `Skip` property from the next test and work on getting that test passing.
+Once none of the tests are skipped and they are all passing, you can submit your solution 
+using `exercism submit TwoFer.cs`
+
+## Further information
+
+For more detailed information about the C# track, including how to get help if
+you're having trouble, please visit the exercism.io [C# language page](http://exercism.io/languages/csharp/resources).
 
 ## Source
-This is an exercise to introduce users to basic programming constructs, just after Hello World. [https://en.wikipedia.org/wiki/Two-fer](https://en.wikipedia.org/wiki/Two-fer)
 
-## Submitting Incomplete Solutions
-It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+[https://github.com/exercism/problem-specifications/issues/757](https://github.com/exercism/problem-specifications/issues/757)
+

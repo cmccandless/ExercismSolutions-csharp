@@ -1,4 +1,4 @@
-// This file was auto-generated based on version 1.0.0 of the canonical data.
+// This file was auto-generated based on version 2.1.0 of the canonical data.
 
 using Xunit;
 
@@ -10,7 +10,7 @@ public class FoodChainTest
         var expected = 
             "I know an old lady who swallowed a fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(1));
+        Assert.Equal(expected, FoodChain.Recite(1));
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class FoodChainTest
             "It wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(2));
+        Assert.Equal(expected, FoodChain.Recite(2));
     }
 
     [Fact]
@@ -33,7 +33,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(3));
+        Assert.Equal(expected, FoodChain.Recite(3));
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(4));
+        Assert.Equal(expected, FoodChain.Recite(4));
     }
 
     [Fact]
@@ -60,7 +60,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(5));
+        Assert.Equal(expected, FoodChain.Recite(5));
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(6));
+        Assert.Equal(expected, FoodChain.Recite(6));
     }
 
     [Fact]
@@ -91,7 +91,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(7));
+        Assert.Equal(expected, FoodChain.Recite(7));
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class FoodChainTest
         var expected = 
             "I know an old lady who swallowed a horse.\n" +
             "She's dead, of course!";
-        Assert.Equal(expected, FoodChain.Verse(8));
+        Assert.Equal(expected, FoodChain.Recite(8));
     }
 
     [Fact]
@@ -120,7 +120,7 @@ public class FoodChainTest
             "She swallowed the bird to catch the spider that wriggled and jiggled and tickled inside her.\n" +
             "She swallowed the spider to catch the fly.\n" +
             "I don't know why she swallowed the fly. Perhaps she'll die.";
-        Assert.Equal(expected, FoodChain.Verse(1, 3));
+        Assert.Equal(expected, FoodChain.Recite(1, 3));
     }
 
     [Fact]
@@ -177,6 +177,6 @@ public class FoodChainTest
             "\n" +
             "I know an old lady who swallowed a horse.\n" +
             "She's dead, of course!";
-        Assert.Equal(expected, FoodChain.Verse(1, 8));
+        Assert.Equal(expected, FoodChain.Recite(1, 8));
     }
 }

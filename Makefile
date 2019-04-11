@@ -4,6 +4,7 @@ else
 	DOTNET=dotnet
 endif
 
+TRACK:=$(shell basename $(shell pwd))
 EXTENSION:=cs
 SOURCE_FILES := $(shell find */* -maxdepth 1 -type f -name '*.$(EXTENSION)')
 EXERCISES := $(shell find */* -maxdepth 1 -type f -name '*.$(EXTENSION)' | cut -d/ -f1 | uniq)
@@ -11,19 +12,22 @@ OUT_DIR=.build
 OBJECTS=$(addprefix $(OUT_DIR)/,$(EXERCISES))
 CLEAN_TARGETS:=$(addprefix clean-,$(EXERCISES))
 MIGRATE_OBJECTS :=$(addsuffix /.exercism/metadata.json, $(EXERCISES))
+MIGRATE_TARGETS:=$(addprefix migrate-,$(EXERCISES))
 
-.PHONY: all test clean check-migrate no-skip
+.PHONY: all test clean no-skip
 all: test
-pre-push pre-commit: no-skip check-migrate test
+pre-push pre-commit: no-skip test
 
 no-skip:
-	@ echo "$@: TODO"
+	@ ! grep -rP '(?<=Fact)\(Skip = "Remove to run test"\)' --exclude-dir=bin/ .
 
-check-migrate: $(MIGRATE_OBJECTS)
+migrate: $(MIGRATE_TARGETS)
+$(MIGRATE_TARGETS): migrate-%: %/.exercism/metadata.json
 
 $(MIGRATE_OBJECTS):
 	$(eval EXERCISE := $(patsubst %/.exercism/metadata.json,%,$@))
-	@ [ -f $@ ] || (echo "$(EXERCISE) has not been migrated" && bash -c 'exit 1')
+	exercism download -t $(TRACK) -e $(EXERCISE)
+	ls $(EXERCISE)/*.$(EXTENSION) | xargs -n1 git checkout --
 
 clean: $(CLEAN_TARGETS)
 $(CLEAN_TARGETS):

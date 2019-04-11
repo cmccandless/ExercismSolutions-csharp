@@ -27,9 +27,11 @@ public class SaddlePoints
         }
     }
 
-    public IEnumerable<Tuple<int, int>> Calculate() =>
+    public IEnumerable<(int, int)> Calculate() =>
         from r in Enumerable.Range(0, RowCount)
         join c in Enumerable.Range(0, ColCount)
         on RowMax[r] equals ColMin[c]
-        select Tuple.Create(r, c);
+        select (r + 1, c + 1);
+
+    public static (int, int)[] Calculate(int[,] matrix) => new SaddlePoints(matrix).Calculate().ToArray();
 }
