@@ -37,6 +37,11 @@ $(CLEAN_TARGETS):
 test: $(EXERCISES)
 $(EXERCISES): %: $(OUT_DIR)/%
 
+ciAtoD: $(filter a% b% c% d%,$(EXERCISES))
+ciEtoN: $(filter e% f% g% h% i% j% k% l% m% n%,$(EXERCISES))
+ciOtoR: $(filter o% p% q% r%,$(EXERCISES))
+ciStoZ: $(filter s% t% u% v% w% x% y% z%,$(EXERCISES))
+
 $(OUT_DIR):
 	@ mkdir -p $@
 

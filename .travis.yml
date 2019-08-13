@@ -14,8 +14,14 @@ env:
       key_url: 'https://packages.microsoft.com/keys/microsoft.asc'
     packages:
     - dotnet-dev-1.0.4
-script:
-  - make -j8 test
+  matrix:
+    - JOB=AtoD
+    - JOB=EtoN
+    - JOB=OtoR
+    - JOB=StoZ
+
+script: make ci$JOB
+
 cache:
   directories:
   - $HOME/.nuget/packages
