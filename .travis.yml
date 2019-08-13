@@ -15,7 +15,7 @@ env:
     packages:
     - dotnet-dev-1.0.4
 script:
-  - make -j8 test
+  - make test
 cache:
   directories:
   - $HOME/.nuget/packages

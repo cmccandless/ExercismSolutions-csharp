@@ -31,10 +31,11 @@ $(MIGRATE_OBJECTS):
 
 clean: $(CLEAN_TARGETS)
 $(CLEAN_TARGETS):
-	$(eval EXERCISE := $(patsubst $(OUT_DIR)/%,%,$@))
+	$(eval EXERCISE := $(patsubst $(OUT_DIR)/clean-%,%,$@))
 	rm -rf $(EXERCISE)/bin $(EXERCISE)/obj $(OUT_DIR)/$(EXERCISE)
 
-test: $(EXERCISES)
+test:
+	dotnet test csharp.sln
 $(EXERCISES): %: $(OUT_DIR)/%
 
 $(OUT_DIR):
